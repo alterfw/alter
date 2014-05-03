@@ -19,11 +19,16 @@ require_once __DIR__."/../vendor/meta-box/meta-box.php";
 require_once  __DIR__."/exceptions/NoPostFoundException.php";
 
 // Framework Classes
+require_once  __DIR__."/App.php";
+require_once  __DIR__."/Post.php";
 require_once  __DIR__."/AppModel.php";
 require_once  __DIR__."/RegisterMetaBox.php";
 
-// User Models, Views and Controllers
+// Initialize the app
+global $app;
+$app = new App();
 
+// User Models, Views and Controllers
 $rw = new RegisterMetabox();
 
 foreach(['model', 'controller', 'view'] as $folder){
@@ -40,6 +45,7 @@ foreach(['model', 'controller', 'view'] as $folder){
 
         // Register the meta-boxes if is a model
         if(is_subclass_of($instance, 'AppModel')){
+            $app->registerModel($instance);
             $rw->add($instance->getPostType(), $instance->getFields());
         }
 

@@ -47,7 +47,7 @@ abstract class AppModel {
      * @param $options
      * @return bool|WP_Query
      */
-    function find($options){
+    function find($options = null){
 
         try{
 
@@ -80,9 +80,22 @@ abstract class AppModel {
 
             if(!$qr->have_posts()){
                 throw new NoPostFoundException();
-            }
+            }else{
 
-            return $qr;
+                $posts = [];
+
+                while($qr->have_posts()){
+
+                    $qr->the_post();
+
+                    $obj = new PostObject(get_post(get_the_ID()), $this->fields);
+                    array_push($posts, $obj);
+
+                }
+
+                return $posts;
+
+            }
 
         }catch(NoPostFoundException $e){
             return false;
