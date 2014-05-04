@@ -58,6 +58,18 @@ class PostObject {
 
         }
 
+        // Set the thumbnail
+        $image = get_post_thumbnail_id($postObject->ID);
+
+        $img = new stdClass();
+
+        foreach( get_intermediate_image_sizes() as $s ){
+            $wp_image = wp_get_attachment_image_src( $image, $s);
+            $img->{$s} = $wp_image[0];
+        }
+
+        $this->thumbnail = $img;
+
     }
 
     private function getImage($postObject, $key, $value){
