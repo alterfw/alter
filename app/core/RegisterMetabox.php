@@ -34,7 +34,7 @@ class RegisterMetabox {
 
         foreach($this->boxes as $post_type => $fields){
 
-            $meta_boxes[] = array(
+            $box = array(
                 'id' => $post_type . '_metabox',
                 'title' => 'fields',
                 'pages' => array($post_type),
@@ -54,7 +54,7 @@ class RegisterMetabox {
 
                         case 'int':
 
-                            array_push($meta_boxes[0]['fields'], array(
+                            array_push($box['fields'], array(
                                 'name' => $content['label'],
                                 'id'   => $key,
                                 'type' => 'number',
@@ -64,7 +64,7 @@ class RegisterMetabox {
 
                         case 'text':
 
-                            array_push($meta_boxes[0]['fields'], array(
+                            array_push($box['fields'], array(
                                 'name' => $content['label'],
                                 'id'   => $key,
                                 'type' => 'text',
@@ -74,7 +74,7 @@ class RegisterMetabox {
 
                         case 'long_text':
 
-                            array_push($meta_boxes[0]['fields'], array(
+                            array_push($box['fields'], array(
                                 'name' => $content['label'],
                                 'id'   => $key,
                                 'type' => 'textarea',
@@ -84,7 +84,7 @@ class RegisterMetabox {
 
                         case 'float':
 
-                            array_push($meta_boxes[0]['fields'], array(
+                            array_push($box['fields'], array(
                                 'name' => $content['label'],
                                 'id'   => $key,
                                 'type' => 'text',
@@ -94,7 +94,7 @@ class RegisterMetabox {
 
                         case 'boolean':
 
-                            array_push($meta_boxes[0]['fields'], array(
+                            array_push($box['fields'], array(
                                 'name' => $content['label'],
                                 'id'   => $key,
                                 'type' => 'checkbox',
@@ -104,7 +104,7 @@ class RegisterMetabox {
 
                         case 'file':
 
-                            array_push($meta_boxes[0]['fields'], array(
+                            array_push($box['fields'], array(
                                 'name' => $content['label'],
                                 'id'   => $key,
                                 'type' => 'file',
@@ -116,7 +116,7 @@ class RegisterMetabox {
 
                             if(!$content['multiple']){
 
-                                array_push($meta_boxes[0]['fields'], array(
+                                array_push($box['fields'], array(
                                     'name' => $content['label'],
                                     'id'   => $key,
                                     'type' => 'image',
@@ -124,7 +124,7 @@ class RegisterMetabox {
 
                             }else{
 
-                                array_push($meta_boxes[0]['fields'], array(
+                                array_push($box['fields'], array(
                                     'name' => $content['label'],
                                     'id'   => $key,
                                     'type' => 'plupload_image',
@@ -140,9 +140,11 @@ class RegisterMetabox {
 
             }
 
+            array_push($meta_boxes, $box);
+
         }
 
-        if(count($meta_boxes[0]['fields']) > 0){
+        if(count($meta_boxes) > 0){
             return $meta_boxes;
         }else{
             return [];
