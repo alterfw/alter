@@ -11,6 +11,7 @@ Enter in your theme folder and run:
 
 	git clone git@github.com:sergiovilar/alter.git app
 	cd app;
+	git pull && git submodule init && git submodule update && git submodule status
 	git submodule foreach --recursive git submodule update --init
 
 ### TODO
