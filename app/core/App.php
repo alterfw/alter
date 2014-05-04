@@ -15,4 +15,28 @@ class App {
 
     }
 
+    public static function defaultPage($title, $slug, $parent = 0, $content = ''){
+
+        $_page = get_page_by_title($title);
+
+        // Check if page exists
+        if(!$_page || $_page->post_status == 'trash'){
+
+            $page = wp_insert_post(array(
+                'post_type'     => 'page',
+                'post_status'   => 'publish',
+                'post_title'    => $title,
+                'post_name'     => $slug,
+                'post_content'  => $content,
+                'post_parent'   => $parent
+            ));
+
+            return $page;
+
+        }else{
+            return false;
+        }
+
+    }
+
 } 
