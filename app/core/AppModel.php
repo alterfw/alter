@@ -51,31 +51,11 @@ abstract class AppModel {
 
         try{
 
-            $attrs = $this->getDefaultQuery();
-
-            if(!empty($options)){
-
-                // Posts limit
-                if(!empty($options['limit'])){
-                    $attrs['posts_per_page'] = $options['limit'];
-                }
-
-                // Check if has a manual query
-                if(!empty($options['query'])){
-
-                    $arr = explode('&', $options['query']);
-
-                    foreach($arr as $item){
-
-                        $arr_item = explode('=', $item);
-                        $attrs[$arr_item[0]] = $arr_item[1];
-
-                    }
-
-                }
-
+            if(empty($options['limit'])){
+                $options['limit'] = -1;
             }
 
+            $attrs = $this->buildQuery($options);
             $qr = new WP_Query($attrs);
 
             if(!$qr->have_posts()){
@@ -107,6 +87,51 @@ abstract class AppModel {
         return new PostObject(get_post($id), $this->fields);
     }
 
+    public function paginate($limit = null){
+
+        $paged = ( get_query_var('paged') ) ? get_query_var('paged') : 1;
+
+        if(empty($limit)){
+            $limit = get_option('posts_per_page');
+        }
+
+        $this->find(array('limit' => $limit, 'query' => 'paged='.$paged));
+
+    }
+
+    private function buildQuery($options = null){
+
+        $attrs = $this->getDefaultQuery();
+
+        if(!empty($options)){
+
+            if(is_int($options)){
+                $options = array('limit' => $options);
+            }
+
+            // Posts limit
+            if(!empty($options['limit'])){
+                $attrs['posts_per_page'] = $options['limit'];
+            }
+
+            // Check if has a manual query
+            if(!empty($options['query'])){
+
+                $arr = explode('&', $options['query']);
+
+                foreach($arr as $item){
+
+                    $arr_item = explode('=', $item);
+                    $attrs[$arr_item[0]] = $arr_item[1];
+
+                }
+
+            }
+
+        }
+
+    }
+
     /**
      * Create a default query
      *
@@ -115,8 +140,7 @@ abstract class AppModel {
     private function getDefaultQuery(){
 
         return array(
-            'post_type'         => $this->post_type,
-            'posts_per_page'    => -1
+            'post_type' => $this->post_type,
         );
 
     }
