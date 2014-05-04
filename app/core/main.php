@@ -9,7 +9,14 @@
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
-define( 'RWMB_URL', get_bloginfo('template_url') . "/app/vendor/meta-box/" );
+add_theme_support( 'post-thumbnails' );
+
+define('THEME_PATH', get_bloginfo('template_url'));
+define('ALTER', THEME_PATH . "/app/");
+define('ALTER_IMG', THEME_PATH . "img/");
+define('ALTER_CSS', THEME_PATH . "css/");
+define('ALTER_JS', THEME_PATH . "js/");
+define('RWMB_URL', ALTER . "vendor/meta-box/" );
 
 // Importa os vendors
 require_once __DIR__."/../vendor/meta-box/meta-box.php";
