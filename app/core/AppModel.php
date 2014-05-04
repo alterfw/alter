@@ -47,7 +47,7 @@ abstract class AppModel {
      * @param $options
      * @return bool|WP_Query
      */
-    function find($options = null){
+    public function find($options = null){
 
         try{
 
@@ -101,6 +101,10 @@ abstract class AppModel {
             return false;
         }
 
+    }
+
+    public function findById($id){
+        return new PostObject(get_post($id), $this->fields);
     }
 
     /**
