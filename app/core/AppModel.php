@@ -126,6 +126,8 @@ abstract class AppModel {
 
         }
 
+        return $attrs;
+
     }
 
     /**
@@ -136,7 +138,8 @@ abstract class AppModel {
     private function getDefaultQuery(){
 
         return array(
-            'post_type' => $this->post_type,
+            'post_type'     => $this->post_type,
+            'post_status'   => 'publish'
         );
 
     }

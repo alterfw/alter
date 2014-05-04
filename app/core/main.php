@@ -20,7 +20,7 @@ define('RWMB_URL', ALTER . "vendor/meta-box/" );
 
 // Importa os vendors
 require_once __DIR__."/../vendor/meta-box/meta-box.php";
-//require_once __DIR__."/../vendor/Wordpress-for-Developers/lib/load.php";
+require_once __DIR__."/../vendor/Wordpress-for-Developers/lib/load.php";
 
 // ---- Import framework Classes
 

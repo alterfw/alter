@@ -36,7 +36,7 @@ class RegisterMetabox {
 
             $box = array(
                 'id' => $post_type . '_metabox',
-                'title' => 'fields',
+                'title' => __('More') .' '. __('About'),
                 'pages' => array($post_type),
                 'context' => 'normal',
                 'priority' => 'high',
