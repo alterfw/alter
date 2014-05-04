@@ -40,13 +40,13 @@ class PostObject {
 
                         case 'image':
 
-                            $this->{$key} = $this->getImage($postObject, $key);
+                            $this->{$key} = $this->getImage($postObject, $key, $value);
 
                             break;
 
                         case 'file':
 
-                            $this->{$key} = get_attached_file($key);
+                            $this->{$key} = $this->getFile($postObject, $key, $value);
 
                             break;
 
@@ -60,12 +60,13 @@ class PostObject {
 
     }
 
-    private function getImage($postObject, $key){
+    private function getImage($postObject, $key, $value){
 
         $retorno = [];
-        $images = get_post_meta($postObject->ID, $key);
 
-        foreach($images as $image){
+        if(empty($value['multiple']) || !$value['multiple']){
+
+            $image = get_post_meta($postObject->ID, $key, true);
 
             $img = new stdClass();
 
@@ -74,11 +75,48 @@ class PostObject {
                 $img->{$s} = $wp_image[0];
             }
 
-            array_push($retorno, $img);
+            $retorno = $img;
+
+        }else{
+
+            $images = get_post_meta($postObject->ID, $key);
+
+            foreach($images as $image){
+
+                $img = new stdClass();
+
+                foreach( get_intermediate_image_sizes() as $s ){
+                    $wp_image = wp_get_attachment_image_src( $image, $s);
+                    $img->{$s} = $wp_image[0];
+                }
+
+                array_push($retorno, $img);
+
+            }
 
         }
 
         return $retorno;
+
+    }
+
+    private function getFile($postObject, $key, $value){
+
+        if(empty($value['multiple']) || !$value['multiple']){
+
+            return wp_get_attachment_url(get_post_meta($postObject->ID, $key, true));
+
+        }else{
+
+            $files = [];
+            $wpfiles = get_post_meta($postObject->ID, $key);
+            foreach($wpfiles as $file){
+                array_push($files, wp_get_attachment_url($file));
+            }
+
+            return $files;
+
+        }
 
     }
 
