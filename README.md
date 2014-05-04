@@ -5,7 +5,15 @@ Alter is a small MVC-like framework to develop Wordpress themes
 
 Checkout the [Documentation](https://github.com/sergiovilar/alter/wiki).
 
-## TODO
+## Installation
+
+Enter in your theme folder and run:
+
+	git clone git@github.com:sergiovilar/alter.git app
+	cd app;
+	git submodule foreach --recursive git submodule update --init
+
+### TODO
  - [x] Create helper class for templates
  - [ ] Create views
  - [x] PostObject returns the file url with type file
