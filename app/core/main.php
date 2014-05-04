@@ -9,6 +9,8 @@
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
+define( 'RWMB_URL', get_bloginfo('template_url') . "/app/vendor/meta-box/" );
+
 // Importa os vendors
 require_once __DIR__."/../vendor/meta-box/meta-box.php";
 //require_once __DIR__."/../vendor/Wordpress-for-Developers/lib/load.php";
