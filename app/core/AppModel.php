@@ -11,10 +11,6 @@ abstract class AppModel {
     private $post_type;
     private $taxonomies;
 
-    private $singular;
-    private $plural;
-    private $description = '';
-
     function __construct(){
 
         // Define the post_type by convention (Ex: PostModel);
@@ -150,12 +146,28 @@ abstract class AppModel {
      */
     public function registerPostType(){
 
-        if(!empty($this->singular)){
+        if(!isset($this->singular)){
             $this->singular = ucfirst($this->post_type);
         }
 
-        if(!empty($this->plural)){
+        if(!isset($this->plural)){
             $this->plural = ucfirst($this->post_type) . 's';
+        }
+
+        if(!isset($this->description)){
+            $this->description = '';
+        }
+
+        if(!isset($this->icon)){
+            $icon = 'dashicons-admin-post';
+        }else{
+
+            if(strpos($this->icon, '.') > 0){
+                $icon = ALTER_IMG . $this->icon;
+            }else{
+                $icon = $this->icon;
+            }
+
         }
 
         $supports = [];
@@ -171,19 +183,19 @@ abstract class AppModel {
         if(count($supports) == 0) $supports = false;
 
         $labels = array(
-            'name'                => _x( $this->plural, 'Post Type General Name', 'text_domain' ),
-            'singular_name'       => _x( $this->singular, 'Post Type Singular Name', 'text_domain' ),
-            'menu_name'           => __( $this->singular, 'text_domain' ),
-            'parent_item_colon'   => __( 'Parent Item:', 'text_domain' ),
-            'all_items'           => __( 'All', 'text_domain' ) . ' '. $this->plural ,
-            'view_item'           => __( 'View', 'text_domain' ) . ' '. $this->singular,
-            'add_new_item'        => __( 'Add New', 'text_domain' ) . ' '. $this->singular,
-            'add_new'             => __( 'Add New', 'text_domain' ),
-            'edit_item'           => __( 'Edit', 'text_domain' ) . ' '. $this->singular,
-            'update_item'         => __( 'Update', 'text_domain' ). ' '. $this->singular,
-            'search_items'        => __( 'Search', 'text_domain' ). ' '. $this->singular,
-            'not_found'           => __( 'Not found', 'text_domain' ),
-            'not_found_in_trash'  => __( 'Not found in Trash', 'text_domain' ),
+            'name'                => __($this->plural),
+            'singular_name'       => __($this->singular),
+            'menu_name'           => __($this->plural),
+            'parent_item_colon'   => __( 'Parent Item:'),
+            'all_items'           => __($this->plural),
+            'view_item'           => __( 'View') . ' '. __($this->plural),
+            'add_new_item'        => __( 'Add' ) . ' '. __($this->singular),
+            'add_new'             => __( 'Add') .' '. __($this->singular),
+            'edit_item'           => __( 'Edit') . ' '. __($this->singular),
+            'update_item'         => __( 'Update'). ' '. __($this->singular),
+            'search_items'        => __( 'Search'). ' '. __($this->singular),
+            'not_found'           => __( 'Not found'),
+            'not_found_in_trash'  => __( 'Not found in Trash'),
         );
 
         $args = array(
@@ -199,7 +211,7 @@ abstract class AppModel {
             'show_in_nav_menus'   => true,
             'show_in_admin_bar'   => true,
             'menu_position'       => 5,
-            'menu_icon'           => '',
+            'menu_icon'           => $icon,
             'can_export'          => true,
             'has_archive'         => true,
             'exclude_from_search' => false,
