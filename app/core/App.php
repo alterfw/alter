@@ -8,10 +8,42 @@
 
 class App {
 
+    private $smtp;
+
     public function registerModel($model){
 
         $modelName = str_replace('model', '', strtolower(get_class($model)));
         $this->{$modelName} = $model;
+
+    }
+
+    public function SMTP($host, $login, $password, $port = 587, $ssl = false){
+
+        $this->smtp = new stdClass();
+
+        $this->smtp->host = $host;
+        $this->smtp->login = $login;
+        $this->smtp->password = $password;
+        $this->smtp->port = $port;
+        $this->smtp->ssl = $ssl;
+
+        add_action( 'phpmailer_init', array($this, 'configureSMTP'));
+
+    }
+
+    public function configureSMTP( PHPMailer $phpmailer){
+
+        $phpmailer->Host = $this->smtp->host;
+        $phpmailer->Port = $this->smtp->port; // could be different
+        $phpmailer->Username = $this->smtp->login; // if required
+        $phpmailer->Password = $this->smtp->password; // if required
+        $phpmailer->SMTPAuth = true; // if required
+
+        if($this->stmp->ssl){
+            $phpmailer->SMTPSecure = 'ssl'; // enable if required, 'tls' is another possible value
+        }
+
+        $phpmailer->IsSMTP();
 
     }
 
