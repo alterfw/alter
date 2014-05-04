@@ -140,7 +140,9 @@ class RegisterMetabox {
 
             }
 
-            array_push($meta_boxes, $box);
+            if(count($box['fields']) > 0){
+                array_push($meta_boxes, $box);
+            }
 
         }
 
