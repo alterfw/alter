@@ -27,12 +27,58 @@ class PostObject {
             if(!in_array($key, $modelDefaultFields)){
 
                 if(in_array($value['type'], $valueTypes)){
-                    $this->{$key} = get_post_meta($postObject->ID, $key, true);
+
+                    if(empty($value['multiple']) || !$value['multiple']){
+                        $this->{$key} = get_post_meta($postObject->ID, $key, true);
+                    }else{
+                        $this->{$key} = get_post_meta($postObject->ID, $key);
+                    }
+
+                }else{
+
+                    switch($value['type']){
+
+                        case 'image':
+
+                            $this->{$key} = $this->getImage($postObject, $key);
+
+                            break;
+
+                        case 'file':
+
+                            $this->{$key} = get_attached_file($key);
+
+                            break;
+
+                    }
+
                 }
 
             }
 
         }
+
+    }
+
+    private function getImage($postObject, $key){
+
+        $retorno = [];
+        $images = get_post_meta($postObject->ID, $key);
+
+        foreach($images as $image){
+
+            $img = new stdClass();
+
+            foreach( get_intermediate_image_sizes() as $s ){
+                $wp_image = wp_get_attachment_image_src( $image, $s);
+                $img->{$s} = $wp_image[0];
+            }
+
+            array_push($retorno, $img);
+
+        }
+
+        return $retorno;
 
     }
 
