@@ -134,6 +134,18 @@ abstract class AppModel {
             $this->plural = ucfirst($this->post_type) . 's';
         }
 
+        $supports = [];
+
+        foreach($this->fields as $key => $value){
+
+            if(($key =='title' || $key == 'editor' || $key == 'thumbnail' || $key == 'comments') && $value){
+                array_push($supports, $key);
+            }
+
+        }
+
+        if(count($supports) == 0) $supports = false;
+
         $labels = array(
             'name'                => _x( $this->plural, 'Post Type General Name', 'text_domain' ),
             'singular_name'       => _x( $this->singular, 'Post Type Singular Name', 'text_domain' ),
@@ -154,7 +166,7 @@ abstract class AppModel {
             'label'               => __( $this->post_type , 'text_domain' ),
             'description'         => __( $this->description, 'text_domain' ),
             'labels'              => $labels,
-            'supports'            => array( ),
+            'supports'            => $supports,
             'taxonomies'          => array( $this->taxonomies ),
             'hierarchical'        => false,
             'public'              => true,
