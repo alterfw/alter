@@ -1,6 +1,6 @@
-[submodule "app/vendor/meta-box"]
-	path = app/vendor/meta-box
-	url = git@github.com:rilwis/meta-box.git
-[submodule "app/vendor/Wordpress-for-Developers"]
-	path = app/vendor/Wordpress-for-Developers
+[submodule "vendor/Wordpress-for-Developers"]
+	path = vendor/Wordpress-for-Developers
 	url = git@github.com:lucaswxp/Wordpress-for-Developers.git
+[submodule "vendor/meta-box"]
+	path = vendor/meta-box
+	url = git@github.com:rilwis/meta-box.git
