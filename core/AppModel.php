@@ -26,7 +26,13 @@ abstract class AppModel {
      */
     public function getFields()
     {
-        return $this->fields;
+
+        if(!empty($this->fields)){
+            return $this->fields;
+        }else{
+            return false;
+        }
+
     }
 
     /**
@@ -175,13 +181,15 @@ abstract class AppModel {
 
         $supports = [];
 
-        foreach($this->fields as $key => $value){
+        if(!empty($this->fields))
 
-            if(($key =='title' || $key == 'editor' || $key == 'thumbnail' || $key == 'comments') && $value){
-                array_push($supports, $key);
+            foreach($this->fields as $key => $value){
+
+                if(($key =='title' || $key == 'editor' || $key == 'thumbnail' || $key == 'comments') && $value){
+                    array_push($supports, $key);
+                }
+
             }
-
-        }
 
         if(count($supports) == 0) $supports = false;
 
