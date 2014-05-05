@@ -12,7 +12,7 @@ ini_set('display_errors', '1');
 add_theme_support( 'post-thumbnails' );
 
 define('THEME_PATH', get_bloginfo('template_url'));
-define('ALTER', THEME_PATH . "/app/");
+define('ALTER', THEME_PATH . "/alter/");
 define('ALTER_IMG', THEME_PATH . "img/");
 define('ALTER_CSS', THEME_PATH . "css/");
 define('ALTER_JS', THEME_PATH . "js/");
@@ -42,7 +42,7 @@ $rw = new RegisterMetabox();
 
 foreach(['model', 'controller', 'view'] as $folder){
 
-    foreach(glob( __DIR__.'/../'.$folder . "/*.php") as $file){
+    foreach(glob( __DIR__.'/../../'.$folder . "/*.php") as $file){
 
         $name = str_replace('.php', '', $file);
         $name_arr = explode('/', $name);
