@@ -19,6 +19,6 @@ Enter in your theme folder and run:
  - [ ] Create views
  - [x] PostObject returns the file url with type file
  - [ ] Create Controllers (it's necessary?)
- - [ ] Create Options Page abstraction
+ - [x] Create Options Page abstraction
  - [x] Create "default pages" abstraction (on models maybe?)
  - [x] Create interface for sending email via SMTP
