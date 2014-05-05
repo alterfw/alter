@@ -47,7 +47,7 @@ class App {
 
     }
 
-    public static function defaultPage($title, $slug, $parent = 0, $content = ''){
+    public function defaultPage($title, $slug, $parent = 0, $content = ''){
 
         $_page = get_page_by_title($title);
 
