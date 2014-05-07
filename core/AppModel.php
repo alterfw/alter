@@ -79,7 +79,7 @@ abstract class AppModel {
 
                     $qr->the_post();
 
-                    $obj = new PostObject(get_post(get_the_ID()), $this->fields);
+                    $obj = new PostObject(get_post(get_the_ID()), $this);
                     array_push($posts, $obj);
 
                 }
@@ -98,6 +98,28 @@ abstract class AppModel {
         return new PostObject(get_post($id), $this->fields);
     }
 
+    public function findByTaxonomy($taxonomy, $value, $limit){
+
+        $options = [];
+
+        if(empty($limit)){
+            $limit = get_option('posts_per_page');
+        }
+
+        $options['posts_per_page'] = $limit;
+
+        $options['tax_query'] = array(
+            array(
+                'taxonomy' => $taxonomy,
+                'field' => 'slug',
+                'terms' => $value
+            )
+        );
+
+        return $this->find($options);
+
+    }
+
     public function paginate($limit = null){
 
         $paged = ( get_query_var('paged') ) ? get_query_var('paged') : 1;
@@ -106,7 +128,7 @@ abstract class AppModel {
             $limit = get_option('posts_per_page');
         }
 
-        $this->find(array('limit' => $limit, 'query' => 'paged='.$paged));
+        return $this->find(array('limit' => $limit, 'query' => 'paged='.$paged));
 
     }
 
@@ -126,6 +148,13 @@ abstract class AppModel {
             }
 
             // Check if has a manual query
+
+            if(is_array($options)){
+                foreach($options as $key => $value){
+                    $attrs[$key] = $value;
+                }
+            }
+
             if(!empty($options['query'])){
 
                 $arr = explode('&', $options['query']);
