@@ -82,7 +82,7 @@ class App {
         $phpmailer->Password = $this->smtp->password; // if required
         $phpmailer->SMTPAuth = true; // if required
 
-        if($this->stmp->ssl){
+        if($this->smtp->ssl){
             $phpmailer->SMTPSecure = 'ssl'; // enable if required, 'tls' is another possible value
         }
 
