@@ -9,11 +9,54 @@
 class App {
 
     private $smtp;
+    private $taxonomies = [];
+    private $models = [];
 
     public function registerModel($model){
 
         $modelName = str_replace('model', '', strtolower(get_class($model)));
         $this->{$modelName} = $model;
+
+        array_push($this->models, $model);
+
+    }
+
+    /**
+     * Add a taxonomy
+     *
+     * @param $taxonomy
+     * @param $singular
+     * @param $plural
+     */
+    public function registerTaxonomy($taxonomy, $singular, $plural){
+
+        $arr = array('key'=> $taxonomy, 'singular' => $singular, 'plural' => $plural);
+        array_push($this->taxonomies, $arr);
+
+    }
+
+    /**
+     * Register all taxonomies
+     */
+    public function registerTaxonomies(){
+
+        foreach($this->taxonomies as $tax){
+
+            $post_type = [];
+
+            foreach($this->models as $model){
+
+                if($model->getTaxonomies() && in_array($tax['key'], $model->getTaxonomies())){
+                    array_push($post_type, $model->getPostType());
+                }
+
+            }
+
+            if(count($post_type) > 0){
+                new AppTaxonomy($tax, $post_type);
+            }
+
+        }
 
     }
 
@@ -71,4 +114,4 @@ class App {
 
     }
 
-} 
+}

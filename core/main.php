@@ -31,6 +31,7 @@ require_once  __DIR__."/exceptions/NoPostFoundException.php";
 require_once  __DIR__."/App.php";
 require_once  __DIR__."/Post.php";
 require_once  __DIR__."/AppModel.php";
+require_once  __DIR__."/AppTaxonomy.php";
 require_once  __DIR__."/RegisterMetaBox.php";
 require_once  __DIR__."/AdminPage.php";
 

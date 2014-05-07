@@ -9,7 +9,6 @@
 abstract class AppModel {
 
     private $post_type;
-    private $taxonomies;
 
     function __construct(){
 
@@ -29,6 +28,16 @@ abstract class AppModel {
 
         if(!empty($this->fields)){
             return $this->fields;
+        }else{
+            return false;
+        }
+
+    }
+
+    public function getTaxonomies(){
+
+        if(!empty($this->taxonomies)){
+            return $this->taxonomies;
         }else{
             return false;
         }
@@ -179,6 +188,11 @@ abstract class AppModel {
 
         }
 
+        $tax = array();
+
+        if(!empty($this->taxonomies))
+            $tax = $this->taxonomies;
+
         $supports = [];
 
         if(!empty($this->fields))
@@ -214,7 +228,7 @@ abstract class AppModel {
             'description'         => __( $this->description, 'text_domain' ),
             'labels'              => $labels,
             'supports'            => $supports,
-            'taxonomies'          => array( $this->taxonomies ),
+            'taxonomies'          => $tax,
             'hierarchical'        => false,
             'public'              => true,
             'show_ui'             => true,
