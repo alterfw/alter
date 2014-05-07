@@ -32,6 +32,7 @@ require_once  __DIR__."/App.php";
 require_once  __DIR__."/Post.php";
 require_once  __DIR__."/Helper.php";
 require_once  __DIR__."/AppModel.php";
+require_once  __DIR__."/OptionPage.php";
 require_once  __DIR__."/AppTaxonomy.php";
 require_once  __DIR__."/RegisterMetaBox.php";
 require_once  __DIR__."/AdminPage.php";
@@ -44,7 +45,7 @@ $h = new Helper();
 // User Models, Views and Controllers
 $rw = new RegisterMetabox();
 
-foreach(['model', 'controller', 'view'] as $folder){
+foreach(['model', 'controller', 'view', 'option'] as $folder){
 
     foreach(glob( __DIR__.'/../../'.$folder . "/*.php") as $file){
 
@@ -60,6 +61,10 @@ foreach(['model', 'controller', 'view'] as $folder){
         if(is_subclass_of($instance, 'AppModel')){
             $app->registerModel($instance);
             $rw->add($instance->getPostType(), $instance->getFields());
+        }
+
+        if(is_subclass_of($instance, 'OptionPage')){
+            $app->registerOption($instance);
         }
 
     }

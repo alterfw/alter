@@ -60,6 +60,10 @@ class Helper {
         wp_nav_menu( array('menu' => $menu,'container'=>'false' ));
     }
 
+    function option($option){
+        return get_option($option);
+    }
+
     function breadcrumb($home = 'Home', $separator = "/", $el = ''){
 
         $el_b = '';

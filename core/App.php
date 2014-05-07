@@ -11,6 +11,11 @@ class App {
     private $smtp;
     private $taxonomies = [];
     private $models = [];
+    public $option;
+
+    public function __construct(){
+        $this->option = new stdClass();
+    }
 
     public function registerModel($model){
 
@@ -19,6 +24,10 @@ class App {
 
         array_push($this->models, $model);
 
+    }
+
+    public function registerOption($option){
+        $this->option->{strtolower(get_class($option))} = $option;
     }
 
     /**
