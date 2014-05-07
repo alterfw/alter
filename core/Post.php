@@ -28,9 +28,11 @@ class PostObject {
         $this->permalink = get_permalink($this->ID);
 
         // Terms
-        foreach($taxonomies as $taxonomy){
-            $this->{$taxonomy} = wp_get_post_terms( $this->ID, $taxonomy);
-        }
+        if( !empty($taxonomies))
+
+            foreach($taxonomies as $taxonomy){
+                $this->{$taxonomy} = wp_get_post_terms( $this->ID, $taxonomy);
+            }
 
         // Custom fields
         foreach($fields as $key => $value){
@@ -79,6 +81,9 @@ class PostObject {
             $img->{$s} = $wp_image[0];
         }
 
+        $wp_image = wp_get_attachment_image_src( $image, 'full');
+        $img->full = $wp_image[0];
+
         $this->thumbnail = $img;
 
     }
@@ -97,6 +102,9 @@ class PostObject {
                 $wp_image = wp_get_attachment_image_src( $image, $s);
                 $img->{$s} = $wp_image[0];
             }
+
+            $wp_image = wp_get_attachment_image_src( $image, 'full');
+            $img->full = $wp_image[0];
 
             $retorno = $img;
 
