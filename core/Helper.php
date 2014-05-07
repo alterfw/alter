@@ -60,4 +60,39 @@ class Helper {
         wp_nav_menu( array('menu' => $menu,'container'=>'false' ));
     }
 
+    function breadcrumb($home = 'Home', $separator = "/"){
+
+        if (!is_home()) {
+
+            echo '<a href="'.get_siteurl().'">Principal »</a>';
+
+            if (is_category() || is_single()) {
+
+                $cats = get_the_category();
+                echo "<a href='".get_siteurl().$cats[0]->slug."'>".$cats[0]->name."</a>";
+                
+                if (is_single()) {
+                    echo "<a href='#'> ".$separator." ";
+                    the_title();
+                    echo "</a>";
+                }
+
+            } elseif (is_page()) {
+
+                if($post->post_parent > 0){
+
+                    echo "<a href='".get_permalink($post->post_parent)."'> ".$separator." ";
+                    echo get_the_title($post->post_parent);
+                    echo "</a>";
+
+                }
+
+                echo "<a href='#'> ".$separator." ";
+                echo the_title();
+                echo "</a>";
+            }
+        }
+
+    }
+
 } 
