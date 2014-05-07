@@ -8,9 +8,12 @@
 
 class PostObject {
 
-    public function __construct($postObject, $fields){
+    public function __construct($postObject, $model){
 
         $object = [];
+
+        $fields = $model->fields;
+        $taxonomies = $model->getTaxonomies();
 
         $modelDefaultFields = array('title', 'thumbnail', 'editor');
         $valueTypes = array('text', 'long_text', 'int', 'float', 'boolean');
@@ -19,6 +22,14 @@ class PostObject {
         foreach($postObject as $key => $value){
             $chave = str_replace('post_', '', $key);
             $this->{$chave} = $value;
+        }
+
+        // Permalink
+        $this->permalink = get_permalink($this->ID);
+
+        // Terms
+        foreach($taxonomies as $taxonomy){
+            $this->{$taxonomy} = wp_get_post_terms( $this->ID, $taxonomy);
         }
 
         // Custom fields
