@@ -75,7 +75,7 @@ class Helper {
         if (!is_home()) {
 
             echo $el_b;
-            echo '<a href="'.get_siteurl().'">Principal »</a>';
+            echo '<a href="'.$this->url().'">'.$home.' '.$separator.'</a>';
             echo $el_e;
 
             if (is_category() || is_single()) {
@@ -83,19 +83,19 @@ class Helper {
                 $cats = get_the_category();
 
                 echo $el_b;
-                echo "<a href='".get_siteurl().$cats[0]->slug."'>".$cats[0]->name."</a>";
+                echo "<a href='".$this->url().$cats[0]->slug."'>".$cats[0]->name."</a>";
                 echo $el_e;
                 
                 if (is_single()) {
 
-                    echo $el_b;
-                    echo "<a href='#'> ".$separator." ";
-                    the_title();
-                    echo "</a>";
+                    echo $el_b;                    
+                    the_title();                    
                     echo $el_e;
                 }
 
             } elseif (is_page()) {
+
+                global $post;
 
                 if($post->post_parent > 0){
 
@@ -107,10 +107,8 @@ class Helper {
 
                 }
 
-                echo $el_b;
-                echo "<a href='#'> ".$separator." ";
-                echo the_title();
-                echo "</a>";
+                echo $el_b;                
+                echo the_title();                
                 echo $el_e;
             }
         }

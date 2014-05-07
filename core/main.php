@@ -30,14 +30,16 @@ require_once  __DIR__."/exceptions/NoPostFoundException.php";
 // Framework Classes
 require_once  __DIR__."/App.php";
 require_once  __DIR__."/Post.php";
+require_once  __DIR__."/Helper.php";
 require_once  __DIR__."/AppModel.php";
 require_once  __DIR__."/AppTaxonomy.php";
 require_once  __DIR__."/RegisterMetaBox.php";
 require_once  __DIR__."/AdminPage.php";
 
 // Initialize the app
-global $app;
+global $app, $h;
 $app = new App();
+$h = new Helper();
 
 // User Models, Views and Controllers
 $rw = new RegisterMetabox();
