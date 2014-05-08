@@ -105,6 +105,7 @@ class PostObject {
 
             $wp_image = wp_get_attachment_image_src( $image, 'full');
             $img->full = $wp_image[0];
+            $img->caption = get_post($image)->post_excerpt;
 
             $retorno = $img;
 
@@ -120,6 +121,8 @@ class PostObject {
                     $wp_image = wp_get_attachment_image_src( $image, $s);
                     $img->{$s} = $wp_image[0];
                 }
+
+                $img->caption = get_post($image)->post_excerpt;
 
                 array_push($retorno, $img);
 
