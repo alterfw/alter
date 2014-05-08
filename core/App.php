@@ -11,6 +11,7 @@ class App {
     private $smtp;
     private $taxonomies = [];
     private $models = [];
+    private $terms = [];
     public $option;
 
     public function __construct(){
@@ -67,6 +68,8 @@ class App {
 
         }
 
+        add_action('init', array($this, 'registerTerms'), 1);
+
     }
 
     public function SMTP($host, $login, $password, $port = 587, $ssl = false){
@@ -119,6 +122,31 @@ class App {
 
         }else{
             return false;
+        }
+
+    }
+
+    public function registerTerm($taxonomy, $slug, $term){
+
+        $item = new stdClass();
+        $item->taxonomy = $taxonomy;
+        $item->slug = $slug;
+        $item->term = $term;
+
+        array_push($this->terms, $item);
+
+    }
+
+    public function registerTerms(){
+
+        foreach($this->terms as $item){
+
+            if(!term_exists($item->slug, $item->taxonomy)){
+
+                wp_insert_term($item->slug, $item->taxonomy, array('slug'=> $item->slug));
+
+            }
+
         }
 
     }
