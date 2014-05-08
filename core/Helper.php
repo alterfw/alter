@@ -69,6 +69,8 @@ class Helper {
         $el_b = '';
         $el_e = '';
 
+        global $post;
+
         if(!empty($el)){
 
             $el_b = '<'.$el.'>';
@@ -82,20 +84,25 @@ class Helper {
             echo '<a href="'.$this->url().'">'.$home.' '.$separator.'</a>';
             echo $el_e;
 
-            if (is_category() || is_single()) {
+            if(get_post_type( $post ) == 'post'){
 
-                $cats = get_the_category();
+                if (is_category() || is_single()) {
+
+                    $cats = get_the_category();
+
+                    echo $el_b;
+                    echo "<a href='".$this->url().$cats[0]->slug."'>".$cats[0]->name."</a>";
+                    echo $el_e;
+
+                }
+
+            }
+                
+            if (is_single()) {
 
                 echo $el_b;
-                echo "<a href='".$this->url().$cats[0]->slug."'>".$cats[0]->name."</a>";
+                the_title();
                 echo $el_e;
-                
-                if (is_single()) {
-
-                    echo $el_b;                    
-                    the_title();                    
-                    echo $el_e;
-                }
 
             } elseif (is_page()) {
 
