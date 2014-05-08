@@ -95,7 +95,7 @@ abstract class AppModel {
     }
 
     public function findById($id){
-        return new PostObject(get_post($id), $this->fields);
+        return new PostObject(get_post($id), $this);
     }
 
     public function findByTaxonomy($taxonomy, $value, $limit){
