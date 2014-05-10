@@ -104,6 +104,17 @@ class RegisterMetabox {
 
                             break;
 
+                        case 'list':
+
+                            array_push($box['fields'], array(
+                                'name' => $content['label'],
+                                'id'   => $key,
+                                'type' => 'select',
+                                'options' => $content['options']
+                            ));
+
+                            break;
+
                         case 'file':
 
                             array_push($box['fields'], array(
