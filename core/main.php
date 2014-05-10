@@ -13,9 +13,9 @@ add_theme_support( 'post-thumbnails' );
 
 define('THEME_PATH', get_bloginfo('template_url'));
 define('ALTER', THEME_PATH . "/alter/");
-define('ALTER_IMG', THEME_PATH . "img/");
-define('ALTER_CSS', THEME_PATH . "css/");
-define('ALTER_JS', THEME_PATH . "js/");
+if(!defined('ALTER_IMG')) define('ALTER_IMG', THEME_PATH . "img/");
+if(!defined('ALTER_CSS')) define('ALTER_CSS', THEME_PATH . "css/");
+if(!defined('ALTER_JS')) define('ALTER_JS', THEME_PATH . "js/");
 define('RWMB_URL', ALTER . "vendor/meta-box/" );
 
 // Importa os vendors
