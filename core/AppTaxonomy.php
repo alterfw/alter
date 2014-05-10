@@ -17,6 +17,7 @@ class AppTaxonomy{
         $this->key = $config['key'];
         $this->singular = $config['singular'];
         $this->plural = $config['plural'];
+        $this->hierarchical = $config['hierarchical'];
 
         $this->post_type = $post_type;
 
@@ -44,7 +45,7 @@ class AppTaxonomy{
 
         $args = array(
             'labels'                     => $labels,
-            'hierarchical'               => true,
+            'hierarchical'               => $this->hierarchical,
             'public'                     => true,
             'show_ui'                    => true,
             'show_admin_column'          => true,

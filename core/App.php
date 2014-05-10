@@ -38,9 +38,9 @@ class App {
      * @param $singular
      * @param $plural
      */
-    public function registerTaxonomy($taxonomy, $singular, $plural){
+    public function registerTaxonomy($taxonomy, $singular, $plural, $hierarchical = true){
 
-        $arr = array('key'=> $taxonomy, 'singular' => $singular, 'plural' => $plural);
+        $arr = array('key'=> $taxonomy, 'singular' => $singular, 'plural' => $plural, 'hierarchical' => $hierarchical);
         array_push($this->taxonomies, $arr);
 
     }
@@ -143,7 +143,7 @@ class App {
 
             if(!term_exists($item->slug, $item->taxonomy)){
 
-                wp_insert_term($item->slug, $item->taxonomy, array('slug'=> $item->slug));
+                wp_insert_term($item->term, $item->taxonomy, array('slug'=> $item->slug));
 
             }
 
