@@ -45,7 +45,8 @@ $h = new Helper();
 // User Models, Views and Controllers
 $rw = new RegisterMetabox();
 
-foreach(['model', 'controller', 'view', 'option'] as $folder){
+$folders = ['model', 'controller', 'view', 'option'];
+foreach($folder as $folder){
 
     foreach(glob( __DIR__.'/../../'.$folder . "/*.php") as $file){
 
