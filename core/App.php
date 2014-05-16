@@ -106,8 +106,9 @@ class App {
 
         $_page = get_page_by_title($title);
 
-        // Check if page exists
-        if(!$_page || $_page->post_status == 'trash'){
+		if(!is_int($parent)){
+			$parent = $this->getIdBySlug($parent);
+		}
 
             $page = wp_insert_post(array(
                 'post_type'     => 'page',
@@ -149,6 +150,17 @@ class App {
 
         }
 
-    }
+		}
+
+	}
+
+	public function getIdBySlug($page_slug) {
+		$page = get_page_by_path($page_slug);
+		if ($page) {
+			return $page->ID;
+		} else {
+			return null;
+		}
+	}
 
 }
