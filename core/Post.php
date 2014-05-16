@@ -10,7 +10,7 @@ class PostObject {
 
     public function __construct($postObject, $model){
 
-        $object = [];
+        $object = array();
 
         $fields = $model->fields;
         $taxonomies = $model->getTaxonomies();
@@ -90,7 +90,7 @@ class PostObject {
 
     private function getImage($postObject, $key, $value){
 
-        $retorno = [];
+        $retorno = array();
 
         if(empty($value['multiple']) || !$value['multiple']){
 
@@ -142,7 +142,7 @@ class PostObject {
 
         }else{
 
-            $files = [];
+            $files = array();
             $wpfiles = get_post_meta($postObject->ID, $key);
             foreach($wpfiles as $file){
                 array_push($files, wp_get_attachment_url($file));

@@ -162,7 +162,7 @@ class RegisterMetabox {
         if(count($meta_boxes) > 0){
             return $meta_boxes;
         }else{
-            return [];
+            return array();
         }
 
     }

@@ -8,147 +8,148 @@
 
 class App {
 
-    private $smtp;
-    private $taxonomies = [];
-    private $models = [];
-    private $terms = [];
-    public $option;
+	private $smtp;
+	private $taxonomies = array();
+	private $models = array();
+	private $terms = array();
+	public $option;
 
-    public function __construct(){
-        $this->option = new stdClass();
-    }
+	public function __construct(){
+		$this->option = new stdClass();
+	}
 
-    public function registerModel($model){
+	public function registerModel($model){
 
-        $modelName = str_replace('model', '', strtolower(get_class($model)));
-        $this->{$modelName} = $model;
+		$modelName = str_replace('model', '', strtolower(get_class($model)));
+		$this->{$modelName} = $model;
 
-        array_push($this->models, $model);
+		array_push($this->models, $model);
 
-    }
+	}
 
-    public function registerOption($option){
-        $this->option->{strtolower(get_class($option))} = $option;
-    }
+	public function registerOption($option){
+		$this->option->{strtolower(get_class($option))} = $option;
+	}
 
-    /**
-     * Add a taxonomy
-     *
-     * @param $taxonomy
-     * @param $singular
-     * @param $plural
-     */
-    public function registerTaxonomy($taxonomy, $singular, $plural, $hierarchical = true){
+	/**
+	 * Add a taxonomy
+	 *
+	 * @param $taxonomy
+	 * @param $singular
+	 * @param $plural
+	 */
+	public function registerTaxonomy($taxonomy, $singular, $plural, $hierarchical = true){
 
-        $arr = array('key'=> $taxonomy, 'singular' => $singular, 'plural' => $plural, 'hierarchical' => $hierarchical);
-        array_push($this->taxonomies, $arr);
+		$arr = array('key'=> $taxonomy, 'singular' => $singular, 'plural' => $plural, 'hierarchical' => $hierarchical);
+		array_push($this->taxonomies, $arr);
 
-    }
+	}
 
-    /**
-     * Register all taxonomies
-     */
-    public function registerTaxonomies(){
+	/**
+	 * Register all taxonomies
+	 */
+	public function registerTaxonomies(){
 
-        foreach($this->taxonomies as $tax){
+		foreach($this->taxonomies as $tax){
 
-            $post_type = [];
+			$post_type = array();
 
-            foreach($this->models as $model){
+			foreach($this->models as $model){
 
-                if($model->getTaxonomies() && in_array($tax['key'], $model->getTaxonomies())){
-                    array_push($post_type, $model->getPostType());
-                }
+				if($model->getTaxonomies() && in_array($tax['key'], $model->getTaxonomies())){
+					array_push($post_type, $model->getPostType());
+				}
 
-            }
+			}
 
-            if(count($post_type) > 0){
-                new AppTaxonomy($tax, $post_type);
-            }
+			if(count($post_type) > 0){
+				new AppTaxonomy($tax, $post_type);
+			}
 
-        }
+		}
 
-        add_action('init', array($this, 'registerTerms'), 1);
+		add_action('init', array($this, 'registerTerms'), 1);
 
-    }
+	}
 
-    public function SMTP($host, $login, $password, $port = 587, $ssl = false){
+	public function SMTP($host, $login, $password, $port = 587, $ssl = false){
 
-        $this->smtp = new stdClass();
+		$this->smtp = new stdClass();
 
-        $this->smtp->host = $host;
-        $this->smtp->login = $login;
-        $this->smtp->password = $password;
-        $this->smtp->port = $port;
-        $this->smtp->ssl = $ssl;
+		$this->smtp->host = $host;
+		$this->smtp->login = $login;
+		$this->smtp->password = $password;
+		$this->smtp->port = $port;
+		$this->smtp->ssl = $ssl;
 
-        add_action( 'phpmailer_init', array($this, 'configureSMTP'));
+		add_action( 'phpmailer_init', array($this, 'configureSMTP'));
 
-    }
+	}
 
-    public function configureSMTP( PHPMailer $phpmailer){
+	public function configureSMTP( PHPMailer $phpmailer){
 
-        $phpmailer->Host = $this->smtp->host;
-        $phpmailer->Port = $this->smtp->port; // could be different
-        $phpmailer->Username = $this->smtp->login; // if required
-        $phpmailer->Password = $this->smtp->password; // if required
-        $phpmailer->SMTPAuth = true; // if required
+		$phpmailer->Host = $this->smtp->host;
+		$phpmailer->Port = $this->smtp->port; // could be different
+		$phpmailer->Username = $this->smtp->login; // if required
+		$phpmailer->Password = $this->smtp->password; // if required
+		$phpmailer->SMTPAuth = true; // if required
 
-        if($this->smtp->ssl){
-            $phpmailer->SMTPSecure = 'ssl'; // enable if required, 'tls' is another possible value
-        }
+		if($this->smtp->ssl){
+			$phpmailer->SMTPSecure = 'ssl'; // enable if required, 'tls' is another possible value
+		}
 
-        $phpmailer->IsSMTP();
+		$phpmailer->IsSMTP();
 
-    }
+	}
 
-    public function defaultPage($title, $slug, $parent = 0, $content = ''){
+	public function defaultPage($title, $slug, $parent = 0, $content = ''){
 
-        $_page = get_page_by_title($title);
+		$_page = get_page_by_title($title);
 
 		if(!is_int($parent)){
 			$parent = $this->getIdBySlug($parent);
 		}
 
-            $page = wp_insert_post(array(
-                'post_type'     => 'page',
-                'post_status'   => 'publish',
-                'post_title'    => $title,
-                'post_name'     => $slug,
-                'post_content'  => $content,
-                'post_parent'   => $parent
-            ));
+		// Check if page exists
+		if(!$_page || $_page->post_status == 'trash'){
 
-            return $page;
+			$page = wp_insert_post(array(
+				'post_type'     => 'page',
+				'post_status'   => 'publish',
+				'post_title'    => $title,
+				'post_name'     => $slug,
+				'post_content'  => $content,
+				'post_parent'   => $parent
+			));
 
-        }else{
-            return false;
-        }
+			return $page;
 
-    }
+		}else{
+			return false;
+		}
 
-    public function registerTerm($taxonomy, $slug, $term){
+	}
 
-        $item = new stdClass();
-        $item->taxonomy = $taxonomy;
-        $item->slug = $slug;
-        $item->term = $term;
+	public function registerTerm($taxonomy, $slug, $term){
 
-        array_push($this->terms, $item);
+		$item = new stdClass();
+		$item->taxonomy = $taxonomy;
+		$item->slug = $slug;
+		$item->term = $term;
 
-    }
+		array_push($this->terms, $item);
 
-    public function registerTerms(){
+	}
 
-        foreach($this->terms as $item){
+	public function registerTerms(){
 
-            if(!term_exists($item->slug, $item->taxonomy)){
+		foreach($this->terms as $item){
 
-                wp_insert_term($item->term, $item->taxonomy, array('slug'=> $item->slug));
+			if(!term_exists($item->slug, $item->taxonomy)){
 
-            }
+				wp_insert_term($item->term, $item->taxonomy, array('slug'=> $item->slug));
 
-        }
+			}
 
 		}
 

@@ -11,16 +11,17 @@ ini_set('display_errors', '1');
 
 add_theme_support( 'post-thumbnails' );
 
+define('__DIR__', realpath(dirname(__FILE__)));
 define('THEME_PATH', get_bloginfo('template_url'));
 define('ALTER', THEME_PATH . "/alter/");
-if(!defined('ALTER_IMG')) define('ALTER_IMG', THEME_PATH . "img/");
-if(!defined('ALTER_CSS')) define('ALTER_CSS', THEME_PATH . "css/");
-if(!defined('ALTER_JS')) define('ALTER_JS', THEME_PATH . "js/");
+define('ALTER_IMG', THEME_PATH . "img/");
+define('ALTER_CSS', THEME_PATH . "css/");
+define('ALTER_JS', THEME_PATH . "js/");
 define('RWMB_URL', ALTER . "vendor/meta-box/" );
 
 // Importa os vendors
-require_once __DIR__."/../vendor/meta-box/meta-box.php";
-require_once __DIR__."/../vendor/Wordpress-for-Developers/lib/load.php";
+require __DIR__."/../vendor/meta-box/meta-box.php";
+require __DIR__."/../vendor/Wordpress-for-Developers/lib/load.php";
 
 // ---- Import framework Classes
 
@@ -34,7 +35,7 @@ require_once  __DIR__."/Helper.php";
 require_once  __DIR__."/AppModel.php";
 require_once  __DIR__."/OptionPage.php";
 require_once  __DIR__."/AppTaxonomy.php";
-require_once  __DIR__."/RegisterMetaBox.php";
+require_once  __DIR__."/RegisterMetabox.php";
 require_once  __DIR__."/AdminPage.php";
 
 // Initialize the app
@@ -45,8 +46,7 @@ $h = new Helper();
 // User Models, Views and Controllers
 $rw = new RegisterMetabox();
 
-$folders = ['model', 'controller', 'view', 'option'];
-foreach($folder as $folder){
+foreach(array('model', 'controller', 'view', 'option') as $folder){
 
     foreach(glob( __DIR__.'/../../'.$folder . "/*.php") as $file){
 

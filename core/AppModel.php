@@ -73,7 +73,7 @@ abstract class AppModel {
                 throw new NoPostFoundException();
             }else{
 
-                $posts = [];
+                $posts = array();
 
                 while($qr->have_posts()){
 
@@ -100,7 +100,7 @@ abstract class AppModel {
 
     public function findByTaxonomy($taxonomy, $value, $limit){
 
-        $options = [];
+        $options = array();
 
         if(empty($limit)){
             $limit = get_option('posts_per_page');
@@ -222,7 +222,7 @@ abstract class AppModel {
         if(!empty($this->taxonomies))
             $tax = $this->taxonomies;
 
-        $supports = [];
+        $supports = array();
 
         if(!empty($this->fields))
 
