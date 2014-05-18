@@ -6,18 +6,18 @@
  * Time: 10:41 PM
  */
 
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
-
 add_theme_support( 'post-thumbnails' );
 
+// Constants
 define('__DIR__', realpath(dirname(__FILE__)));
 define('THEME_PATH', get_bloginfo('template_url'));
 define('ALTER', THEME_PATH . "/alter/");
-define('ALTER_IMG', THEME_PATH . "img/");
-define('ALTER_CSS', THEME_PATH . "css/");
-define('ALTER_JS', THEME_PATH . "js/");
 define('RWMB_URL', ALTER . "vendor/meta-box/" );
+
+// Assets constants
+if(!defined('ALTER_IMG')) define('ALTER_IMG', THEME_PATH . "img/");
+if(!defined('ALTER_IMG')) define('ALTER_CSS', THEME_PATH . "css/");
+if(!defined('ALTER_IMG')) define('ALTER_JS', THEME_PATH . "js/");
 
 // Importa os vendors
 require __DIR__."/../vendor/meta-box/meta-box.php";
