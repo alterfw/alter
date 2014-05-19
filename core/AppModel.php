@@ -60,13 +60,14 @@ abstract class AppModel {
      */
     public function find($options = null){
 
-        try{
-
-            if(empty($options['limit'])){
-                $options['limit'] = -1;
-            }
+        try{            
 
             $attrs = $this->buildQuery($options);
+
+            if(empty($attrs['limit'])){
+                $attrs['limit'] = -1;
+            }
+
             $qr = new WP_Query($attrs);
 
             if(!$qr->have_posts()){
@@ -96,6 +97,25 @@ abstract class AppModel {
 
     public function findById($id){
         return new PostObject(get_post($id), $this);
+    }
+
+    public function findBySlug($slug){
+
+        $args = array(
+          'name' => $slug,
+          'post_type' => $this->post_type,
+          'post_status' => 'publish',
+          'numberposts' => 1
+        );
+
+        $my_posts = get_posts($args);
+        
+        if( $my_posts ) {
+            return $this->findById($my_posts[0]->ID);
+        }else{
+            return false;
+        }
+
     }
 
     public function findByTaxonomy($taxonomy, $value, $limit){
@@ -273,7 +293,11 @@ abstract class AppModel {
             'capability_type'     => 'page',
         );
 
-        register_post_type( $this->post_type , $args );
+        if(!empty($this->route))
+            $args['rewrite'] = array('slug' => $this->route, 'with_front' => true);
+
+        if($this->post_type != 'page')
+            register_post_type( $this->post_type , $args );
 
     }
 
