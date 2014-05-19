@@ -16,7 +16,7 @@ class PostObject {
         $taxonomies = $model->getTaxonomies();
 
         $modelDefaultFields = array('title', 'thumbnail', 'editor');
-        $valueTypes = array('text', 'long_text', 'int', 'float', 'boolean');
+        $valueTypes = array('text', 'long_text', 'int', 'float', 'boolean', 'list');
 
         // Post default properties
         foreach($postObject as $key => $value){
@@ -67,6 +67,22 @@ class PostObject {
 
                 }
 
+            }
+
+        }
+
+        // Include subpages    
+        if($model->getPostType() == 'page'){
+
+            $my_wp_query = new WP_Query();
+            $all_wp_pages = $my_wp_query->query(array('post_type' => 'page'));            
+
+            // Filter through all pages and find Portfolio's children
+            $children = get_page_children( $this->ID, $all_wp_pages );
+            $this->children = array();
+
+            foreach($children as $child){
+                array_push($this->children, new PostObject($child, $model));
             }
 
         }
