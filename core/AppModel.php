@@ -256,6 +256,18 @@ abstract class AppModel {
 
         if(count($supports) == 0) $supports = false;
 
+        if(!empty($this->capability_type)){
+            $capability_type = $this->capability_type;
+        }else{
+            $capability_type = 'page';
+        }
+
+        if(!empty($this->capabilities)){
+            $capabilities = $this->capabilities;
+        }else{
+            $capabilities = array();
+        }
+
         $labels = array(
             'name'                => __($this->plural),
             'singular_name'       => __($this->singular),
@@ -290,7 +302,8 @@ abstract class AppModel {
             'has_archive'         => true,
             'exclude_from_search' => false,
             'publicly_queryable'  => true,
-            'capability_type'     => 'page',
+            'capability_type'     => $capability_type,
+            'capabilities'        => $capabilities,
         );
 
         if(!empty($this->route))
