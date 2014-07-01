@@ -1,24 +1,67 @@
 Alter
 =====
 
-Alter is a small MVC-like framework to develop Wordpress themes
+A small framework that provides the way to develop model-based Wordpress themes
 
-Checkout the [Documentation](https://github.com/sergiovilar/alter/wiki).
+### How this works?
+
+Alter provides the way to develop model-based Wordpress themes, using models you can easily create post types, custom meta-boxes, and access the post properties
+
+```php
+<?php
+class carModel extends AppModel{
+	
+	public $fields = array(
+
+		// Default Wordpress fields
+		'editor'	=> true,
+		'title'		=> true,
+		'thumbnail'	=> true,
+
+		// Custom fields
+		'manufacturer'	=> array(
+			'label'		=> 'Manufacturer',
+			'type'		=> 'text'	
+		)
+
+	)
+
+}
+```
+
+### Stop using Wordpress functions
+
+The Wordpress-way to get post properties like thumbnails and custom post fields is very painful, with Alter we made this simple.
+
+```php
+<?php
+
+foreach($app->car->find() as $car){
+	
+	echo $car->title;
+	echo $car->manufacturer;
+	echo "<img src='". $car->thumbnail->medium ."' />";
+
+}
+```
 
 ## Installation
 
 Enter in your theme folder and run:
 
-	git clone git@github.com:sergiovilar/alter.git alter
+	git clone git@github.com:alterfw/alter.git alter
 	cd alter;
 	git pull && git submodule init && git submodule update && git submodule status
 	git submodule foreach --recursive git submodule update --init
 
-### TODO
- - [x] Create helper class for templates
- - [ ] Create views
- - [x] PostObject returns the file url with type file
- - [ ] Create Controllers (it's necessary?)
- - [x] Create Options Page abstraction
- - [x] Create "default pages" abstraction (on models maybe?)
- - [x] Create interface for sending email via SMTP
+After this, add this line to your **functions.php**:
+
+```php
+require_once "alter/core/main.php";
+```
+
+## Documentation
+
+Checkout our [documentation](http://alter-framework.readthedocs.org/en/latest/index.html) on readthedocs.org.
+
+You can also contribute with the documentation in the [separated repository](https://github.com/alterfw/docs).
