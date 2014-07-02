@@ -47,18 +47,25 @@ foreach($app->car->find() as $car){
 
 ## Installation
 
-Enter in your theme folder and run:
+Create a `composer.json` for your theme:
 
-	git clone git@github.com:alterfw/alter.git alter
+	composer init
 
-Then install Alter dependencies:	
+Then add to your `composer.json`:
 	
-	cd alter; composer install	
+	"minimum-stability": "dev",
+	"require": {
+        "alterfw/alter": "dev-master"
+    }    
+
+Run composer:
+
+	composer install
 
 After this, add this line to your **functions.php**:
 
 ```php
-require_once "alter/core/main.php";
+require_once "vendor/autoload.php";
 ```
 
 ## Documentation
