@@ -13,6 +13,7 @@
         "alterfw/php-form-generator": "dev-master",
         "alterfw/wordpress-for-developers": "dev-master"
     },
+    "minimum-stability": "dev",
     "autoload": {
         "files": ["core/main.php"]
     }
