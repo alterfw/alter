@@ -9,7 +9,7 @@
         }
     ],    
     "require": {
-        "rilwis/meta-box": "4.3.x",
+        "rilwis/meta-box": "dev-master",
         "alterfw/php-form-generator": "0.1.x",
         "alterfw/wordpress-for-developers": "0.1.x"
     },
