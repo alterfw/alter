@@ -20,8 +20,9 @@ if(!defined('ALTER_IMG')) define('ALTER_CSS', THEME_PATH . "css/");
 if(!defined('ALTER_IMG')) define('ALTER_JS', THEME_PATH . "js/");
 
 // Importa os vendors
-require __DIR__."/../vendor/meta-box/meta-box.php";
-require __DIR__."/../vendor/Wordpress-for-Developers/lib/load.php";
+require __DIR__."/../vendor/autoload.php";
+require __DIR__."/../vendor/alterfw/php-form-generator/fg/load.php";
+require __DIR__."/../vendor/alterfw/wordpress-for-developers/lib/load.php";
 
 // ---- Import framework Classes
 
