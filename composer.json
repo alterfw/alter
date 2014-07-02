@@ -10,6 +10,7 @@
     ],    
     "require": {
         "rilwis/meta-box": "dev-master",
+        "alterfw/php-form-generator": "dev-master",
         "alterfw/wordpress-for-developers": "dev-master"
     },
     "autoload": {
