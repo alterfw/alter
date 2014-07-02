@@ -36,7 +36,7 @@ require_once  __DIR__."/AdminPage.php";
 require_once  __DIR__."/OptionTree.php";
 
 // Initialize the app
-global $app, $h;
+global $app, $h, $OPT;
 $app = new App();
 $h = new Helper();
 
@@ -63,6 +63,10 @@ foreach(array('model', 'controller', 'view', 'option') as $folder){
 
         if(is_subclass_of($instance, 'OptionPage')){
             $app->registerOption($instance);
+        }
+
+        if(is_subclass_of($instance, 'OptionTree')){
+            $OPT = new OPT($instance);
         }
 
     }
