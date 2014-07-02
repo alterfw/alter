@@ -2,20 +2,31 @@
     "name": "alterfw/alter",
     "description": "A small framework that provides the way to develop model-based Wordpress themes",
     "license": "MIT",
-    "authors": [
-        {
-            "name": "Sergio Vilar",
-            "email": "vilar@me.com"
+    "authors": [{
+        "name": "Sergio Vilar",
+        "email": "vilar@me.com"
+    }],
+    "repositories": [{
+        "type": "package",
+        "package": {
+            "name": "valendesigns/option-tree",
+            "description": "option-tree-theme",
+            "version": "dev-master",
+            "dist": {
+                "url": "https://github.com/valendesigns/option-tree/archive/master.zip",
+                "type": "zip"
+            }
         }
-    ],    
+    }],
+
     "require": {
         "rilwis/meta-box": "dev-master",
         "alterfw/php-form-generator": "dev-master",
-        "alterfw/wordpress-for-developers": "dev-master"
+        "alterfw/wordpress-for-developers": "dev-master",
+        "valendesigns/option-tree": "dev-master"
     },
     "minimum-stability": "dev",
     "autoload": {
         "files": ["core/main.php"]
     }
 }
-

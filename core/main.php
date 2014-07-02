@@ -38,6 +38,7 @@ require_once  __DIR__."/OptionPage.php";
 require_once  __DIR__."/AppTaxonomy.php";
 require_once  __DIR__."/RegisterMetabox.php";
 require_once  __DIR__."/AdminPage.php";
+require_once  __DIR__."/OptionTree.php";
 
 // Initialize the app
 global $app, $h;
