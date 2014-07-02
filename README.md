@@ -52,6 +52,7 @@ Enter in your theme folder and run:
 	git clone git@github.com:alterfw/alter.git alter
 
 Then install Alter dependencies:	
+	
 	cd alter; composer install	
 
 After this, add this line to your **functions.php**:
