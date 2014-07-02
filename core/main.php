@@ -29,11 +29,10 @@ require_once  __DIR__."/App.php";
 require_once  __DIR__."/Post.php";
 require_once  __DIR__."/Helper.php";
 require_once  __DIR__."/AppModel.php";
-require_once  __DIR__."/OptionPage.php";
 require_once  __DIR__."/AppTaxonomy.php";
 require_once  __DIR__."/RegisterMetabox.php";
 require_once  __DIR__."/AdminPage.php";
-require_once  __DIR__."/OptionTree.php";
+require_once  __DIR__."/theme-options/loader.php";
 
 // Initialize the app
 global $app, $h, $OPT;
@@ -42,6 +41,9 @@ $h = new Helper();
 
 // User Models, Views and Controllers
 $rw = new RegisterMetabox();
+
+// Load theme options
+loadThemeOptioninstance();
 
 foreach(array('model', 'controller', 'view', 'option') as $folder){
 
@@ -60,15 +62,6 @@ foreach(array('model', 'controller', 'view', 'option') as $folder){
             $app->registerModel($instance);
             $rw->add($instance->getPostType(), $instance->getFields());
         }
-
-        if(is_subclass_of($instance, 'OptionPage')){
-            $app->registerOption($instance);
-        }
-
-        if(is_subclass_of($instance, 'OptionTree')){
-            $OPT = new OPT($instance);
-        }
-
     }
 }
 
