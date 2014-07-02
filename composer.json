@@ -21,8 +21,8 @@
 
     "require": {
         "rilwis/meta-box": "dev-master",
-        "alterfw/php-form-generator": "dev-master",
-        "alterfw/wordpress-for-developers": "dev-master",
+        "alterfw/php-form-generator": "0.1.x",
+        "alterfw/wordpress-for-developers": "0.1.x",
         "valendesigns/option-tree": "dev-master"
     },
     "minimum-stability": "dev",
