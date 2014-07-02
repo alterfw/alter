@@ -9,9 +9,9 @@
         }
     ],    
     "require": {
-        "rilwis/meta-box": "dev-master",
-        "alterfw/php-form-generator": "dev-master",
-        "alterfw/wordpress-for-developers": "dev-master"
+        "rilwis/meta-box": "4.3.x",
+        "alterfw/php-form-generator": "0.1.x",
+        "alterfw/wordpress-for-developers": "0.1.x"
     },
     "minimum-stability": "dev",
     "autoload": {
