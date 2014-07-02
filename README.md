@@ -55,7 +55,7 @@ Then add to your `composer.json`:
 	
 	"minimum-stability": "dev",
 	"require": {
-        "alterfw/alter": "dev-master"
+        "alterfw/alter": "0.1.x"
     }    
 
 Run composer:
