@@ -73,3 +73,9 @@ require_once "vendor/autoload.php";
 Checkout our [documentation](http://alter-framework.readthedocs.org/en/latest/index.html) on readthedocs.org.
 
 You can also contribute with the documentation in the [separated repository](https://github.com/alterfw/docs).
+
+## Contributing
+
+Feel free to help to improve Alter, you can make pull requests or improve the [documentation](https://github.com/alterfw/docs) also.
+
+If you make a Pull Request of a new feature, make sure to link the [documentation](https://github.com/alterfw/docs) Pull Request.
