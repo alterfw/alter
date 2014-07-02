@@ -61,7 +61,7 @@ class Helper {
     }
 
     function option($option){
-        return get_option($option);
+        return OPT()->get($option);
     }
 
     function breadcrumb($home = 'Home', $separator = "/", $el = ''){
