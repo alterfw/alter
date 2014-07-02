@@ -6,24 +6,12 @@
         "name": "Sergio Vilar",
         "email": "vilar@me.com"
     }],
-    "repositories": [{
-        "type": "package",
-        "package": {
-            "name": "valendesigns/option-tree",
-            "description": "option-tree-theme",
-            "version": "dev-master",
-            "dist": {
-                "url": "https://github.com/valendesigns/option-tree/archive/master.zip",
-                "type": "zip"
-            }
-        }
-    }],
 
     "require": {
         "rilwis/meta-box": "dev-master",
-        "alterfw/php-form-generator": "0.1.x",
         "alterfw/wordpress-for-developers": "0.1.x",
-        "valendesigns/option-tree": "dev-master"
+        "valendesigns/option-tree": "dev-master",
+	    "alterfw/php-form-generator": "0.1.x"
     },
     "minimum-stability": "dev",
     "autoload": {
