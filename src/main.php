@@ -11,6 +11,7 @@ add_theme_support( 'post-thumbnails' );
 // Constants
 define('__DIR__', realpath(dirname(__FILE__)));
 define('THEME_PATH', get_bloginfo('template_url'));
+define('THEME_ABSOLUTE_PATH', get_template_directory());
 define('ALTER', get_template_directory() . "/vendor/alterfw/alter/");
 define('RWMB_URL', get_template_directory() . "/vendor/rilwis/meta-box/" );
 

@@ -31,7 +31,7 @@ class Loader
 
 		foreach ($this->folders as $folder) {
 
-			foreach (glob(get_template_directory() . '/' . $folder . "/*.php") as $file) {
+			foreach (glob(THEME_ABSOLUTE_PATH . '/' . $folder . "/*.php") as $file) {
 
 				$name = str_replace('.php', '', $file);
 				$name_arr = explode('/', $name);
