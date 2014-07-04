@@ -10,7 +10,7 @@
     ],    
     "require": {
         "alterfw/meta-box": "dev-master",
-        "alterfw/wordpress-for-developers": "0.1.x"
+        "alterfw/wordpress-for-developers": "dev-master"
     },
     "minimum-stability": "dev",
     "autoload": {
