@@ -12,9 +12,12 @@
         "alterfw/meta-box": "dev-master",
         "alterfw/wordpress-for-developers": "dev-master"
     },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
+    },
     "minimum-stability": "dev",
     "autoload": {
-        "files": ["core/main.php"]
+        "files": ["src/main.php"]
     }
 }
 
