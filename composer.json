@@ -9,7 +9,7 @@
         }
     ],    
     "require": {
-        "rilwis/meta-box": "dev-master",
+        "alterfw/meta-box": "dev-master",
         "alterfw/wordpress-for-developers": "0.1.x"
     },
     "minimum-stability": "dev",
