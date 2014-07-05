@@ -56,8 +56,19 @@ class Helper {
         return get_bloginfo('url')."/";
     }
 
-    function menu($menu){
-        wp_nav_menu( array('menu' => $menu,'container'=>'false' ));
+    /**
+     * @param string $menu
+     * @param array $extra
+     */
+    function menu($menu, array $extra = array()){
+        $args = wp_parse_args(
+           $extra,
+           array(
+              'menu'      => $menu,
+              'container' => null
+           )
+        );
+        wp_nav_menu($args);
     }
 
     function option($option){
@@ -97,7 +108,7 @@ class Helper {
                 }
 
             }
-                
+
             if (is_single()) {
 
                 echo $el_b;
@@ -118,8 +129,8 @@ class Helper {
 
                 }
 
-                echo $el_b;                
-                echo the_title();                
+                echo $el_b;
+                echo the_title();
                 echo $el_e;
             }
         }
