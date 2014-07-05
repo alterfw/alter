@@ -26,6 +26,7 @@ require_once  __DIR__."/exceptions/NoPostFoundException.php";
 
 // Framework Classes
 require_once  __DIR__."/App.php";
+require_once  __DIR__."/AppTheme.php";
 require_once  __DIR__."/Post.php";
 require_once  __DIR__."/Helper.php";
 require_once  __DIR__."/AppModel.php";
@@ -35,9 +36,10 @@ require_once  __DIR__."/AdminPage.php";
 require_once  __DIR__."/theme-options/loader.php";
 
 // Initialize the app
-global $app, $h, $OPT;
+global $app, $appTheme, $h, $OPT;
 $app = new App();
 $h = new Helper();
+$appTheme = new AppTheme();
 
 // User Models, Views and Controllers
 $rw = new RegisterMetabox();
