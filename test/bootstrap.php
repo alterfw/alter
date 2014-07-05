@@ -7,7 +7,7 @@ error_reporting( E_ALL & ~E_DEPRECATED & ~E_STRICT );
 
 require_once 'PHPUnit/Autoload.php';
 
-$config_file_path = dirname( __FILE__ ) . '/unittests-config.php';
+$config_file_path = ABSPATH . '/wp-tests-config.php';
 
 /*
  * Globalize some WordPress variables, because PHPUnit loads this file inside a function
@@ -20,7 +20,7 @@ global $table_prefix, $wp_embed, $wp_locale, $_wp_deprecated_widgets_callbacks, 
 // These are still needed
 global $wpdb, $current_site, $current_blog, $wp_rewrite, $shortcode_tags, $wp;
 
-define( 'WPMU_PLUGIN_DIR', dirname( __FILE__ ) . '/mu-plugins' );
+//define( 'WPMU_PLUGIN_DIR', dirname( __FILE__ ) . '/mu-plugins' );
 
 require_once $config_file_path;
 
