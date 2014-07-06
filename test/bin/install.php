@@ -5,7 +5,20 @@
  * @todo Reuse the init/load code in init.php
  */
 error_reporting( E_ALL & ~E_DEPRECATED & ~E_STRICT );
-define('ABSPATH', '/vagrant/wordpress/');
+
+if(file_exists("/vagrant/wordpress/wp-tests-config.php")){
+
+    define('ABSPATH',  '/vagrant/wordpress/');
+
+}else{
+
+    // Or on Travis-ci
+    if(!defined('ABSPATH')) define('ABSPATH',  '/tmp/wordpress/src/');
+
+}
+
+define('THEME_ABSOLUTE_PATH',  ABSPATH . '/wp-content/themes/example-theme-master/');
+
 $config_file_path = $argv[1];
 
 $config_dir = ABSPATH . 'wp-content/themes/example-theme-master/vendor/alterfw/alter/test';
