@@ -97,7 +97,7 @@ So, with the Vagrant VM on, you need to replace the alter dependency (installed 
 
 ```shell
 vagrant ssh
-cd /vagrant/wordpress/wp-content/themes/example-theme/vendor/alterfw
+cd /vagrant/wordpress/wp-content/themes/example-theme-master/vendor/alterfw
 rm -rf alter
 git clone git@github.com:alterfw/alter.git
 ```	
@@ -108,7 +108,7 @@ To run the tests you need first to setup the [development environment](#developm
 
 After this you can run the tests simply:
 
-	cd /vagrant/wordpress/wp-content/themes/example-theme/vendor/alterfw/alter
+	cd /vagrant/wordpress/wp-content/themes/example-theme-master/vendor/alterfw/alter
 	phpunit
 
 
