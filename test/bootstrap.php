@@ -3,8 +3,8 @@
  * Installs WordPress for running the tests and loads WordPress and the test libraries
  */
 
-define('ABSPATH',  '/vagrant/wordpress/');
-define('THEME_ABSOLUTE_PATH',  '/vagrant/wordpress/wp-content/themes/example-theme-master/');
+define('ABSPATH',  '/tmp/wordpress/src/');
+define('THEME_ABSOLUTE_PATH',  '/tmp/wordpress/src/wp-content/themes/example-theme-master/');
 error_reporting(0);
 
 //require_once 'PHPUnit/Autoload.php';
