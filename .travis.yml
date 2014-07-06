@@ -53,6 +53,7 @@ before_script:
     - sed -i "s/youremptytestdbnamehere/wordpress_tests/" wp-tests-config.php
     - sed -i "s/yourusernamehere/travis/" wp-tests-config.php
     - sed -i "s/yourpasswordhere/~/" wp-tests-config.php
+    - cat wp-tests-config.php
     - ls
     - cd /tmp/wordpress/src/wp-content/themes/example-theme-master/vendor/alterfw/alter
 
