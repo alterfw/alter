@@ -7,17 +7,17 @@
 if(file_exists("/vagrant/wordpress/wp-tests-config.php")){
 
     define('ABSPATH',  '/vagrant/wordpress/');
-    define('THEME_ABSOLUTE_PATH',  '/vagrant/wordpress/wp-content/themes/example-theme-master/');
     $config_file_path = ABSPATH . 'wp-tests-config.php';
 
 }else{
 
     // Or on Travis-ci
-    define('THEME_ABSOLUTE_PATH',  ABSPATH . '/wp-content/themes/example-theme-master/');
+    if(!defined('ABSPATH')) define('ABSPATH',  '/vagrant/wordpress/');
     $config_file_path = ABSPATH . '../wp-tests-config.php';
 
 }
 
+define('THEME_ABSOLUTE_PATH',  ABSPATH . '/wp-content/themes/example-theme-master/');
 
 /*
  * Globalize some WordPress variables, because PHPUnit loads this file inside a function
