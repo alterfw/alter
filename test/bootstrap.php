@@ -4,7 +4,8 @@
  */
 
 define('ABSPATH',  '/vagrant/wordpress/');
-error_reporting( E_ALL & ~E_DEPRECATED & ~E_STRICT );
+define('THEME_ABSOLUTE_PATH',  '/vagrant/wordpress/wp-content/themes/example-theme-master/');
+error_reporting(0);
 
 //require_once 'PHPUnit/Autoload.php';
 
@@ -39,3 +40,6 @@ require_once ABSPATH . '/wp-settings.php';
 
 require dirname( __FILE__ ) . '/lib/testcase.php';
 require dirname( __FILE__ ) . '/lib/exceptions.php';
+require dirname( __FILE__ ) . '/lib/Alter_UnitTestCase.php';
+
+require_once THEME_ABSOLUTE_PATH . '/functions.php';

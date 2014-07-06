@@ -5,7 +5,13 @@
  *
  * @package wordpress-plugins-tests
  */
-class WP_Test_Wordpress_samples extends WP_UnitTestCase {
+class WP_Test_Wordpress_samples extends Alter_UnitTestCase {
+
+    function test_theme_is_active(){
+
+        $this->assertTrue( 'Alter Example Theme' == get_current_theme() );
+
+    }
 
 	/**
 	 * Run a simple test to ensure that the tests are running

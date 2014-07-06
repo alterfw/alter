@@ -11,10 +11,10 @@ add_theme_support( 'post-thumbnails' );
 // Constants
 define('__DIR__', realpath(dirname(__FILE__)));
 define('THEME_PATH', get_bloginfo('template_url'));
-define('THEME_ABSOLUTE_PATH', get_template_directory());
+if(!defined('THEME_ABSOLUTE_PATH')) define('THEME_ABSOLUTE_PATH', get_template_directory());
 define('ALTER', get_template_directory() . "/vendor/alterfw/alter/");
 define('RWMB_URL', THEME_PATH . "/vendor/alterfw/meta-box/" );
-define('RWMB_DIR', get_template_directory() . "/vendor/alterfw/meta-box/" );
+define('RWMB_DIR', THEME_ABSOLUTE_PATH . "/vendor/alterfw/meta-box/" );
 
 // Assets constants
 if(!defined('ALTER_IMG')) define('ALTER_IMG', THEME_PATH . "img/");
@@ -22,9 +22,9 @@ if(!defined('ALTER_IMG')) define('ALTER_CSS', THEME_PATH . "css/");
 if(!defined('ALTER_IMG')) define('ALTER_JS', THEME_PATH . "js/");
 
 // ---- Import framework dependencies in the right order (Composer sucks for that!)
-require_once __DIR__ . "/../../php-form-generator/fg/load.php";
-require_once __DIR__ . "/../../wordpress-for-developers/lib/load.php";
-require_once __DIR__ . "/../../meta-box/meta-box.php";
+require_once THEME_ABSOLUTE_PATH . "/vendor/alterfw/php-form-generator/fg/load.php";
+require_once THEME_ABSOLUTE_PATH . "/vendor/alterfw/wordpress-for-developers/lib/load.php";
+require_once THEME_ABSOLUTE_PATH . "/vendor/alterfw/meta-box/meta-box.php";
 
 // ---- Import framework Classes
 
