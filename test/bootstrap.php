@@ -4,7 +4,7 @@
  */
 
 // Check if is running on Vagrantpress
-if(file_exists("/vagrant/wordpress/wp-tests-config.php")){
+if(file_exists("/vagrant/wordpress/wp-config.php")){
 
     define('ABSPATH',  '/vagrant/wordpress/');
     $config_file_path = ABSPATH . 'wp-tests-config.php';
