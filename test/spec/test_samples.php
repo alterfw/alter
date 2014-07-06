@@ -9,7 +9,7 @@ class WP_Test_Wordpress_samples extends Alter_UnitTestCase {
 
     function test_theme_is_active(){
 
-        $this->assertTrue( 'Alter Example Theme' == get_current_theme() );
+        $this->assertTrue( 'Alter Example Theme' == wp_get_theme()->name );
 
     }
 
