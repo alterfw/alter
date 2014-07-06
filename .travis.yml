@@ -38,7 +38,7 @@ before_script:
     - export PLUGIN_SLUG=$(basename $(pwd))
     - git clone --depth=50 --branch="$WP_VERSION" git://develop.git.wordpress.org/ /tmp/wordpress
     - cd ..
-    - git clone git@github.com:alterfw/example-theme.git example-theme-master
+    - git clone https://github.com/alterfw/example-theme.git example-theme-master
     - mv "example-theme-master" "/tmp/wordpress/src/wp-content/themes/"
     - cd /tmp/wordpress/src/wp-content/themes/example-theme-master
     - wget http://getcomposer.org/composer.phar -O composer.phar
