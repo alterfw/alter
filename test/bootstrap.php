@@ -5,7 +5,7 @@
 
 define('ABSPATH',  '/tmp/wordpress/src/');
 define('THEME_ABSOLUTE_PATH',  '/tmp/wordpress/src/wp-content/themes/example-theme-master/');
-error_reporting(0);
+//error_reporting(0);
 
 //require_once 'PHPUnit/Autoload.php';
 
