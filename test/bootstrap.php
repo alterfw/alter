@@ -3,18 +3,21 @@
  * Installs WordPress for running the tests and loads WordPress and the test libraries
  */
 
-if (defined('ABSPATH')){
-
-    define('THEME_ABSOLUTE_PATH',  '/tmp/wordpress/src/wp-content/themes/example-theme-master/');
-    $config_file_path = ABSPATH . '../wp-tests-config.php';
-
-}else{
+// Check if is running on Vagrantpress
+if(file_exists("/vagrant/wordpress/wp-tests-config.php")){
 
     define('ABSPATH',  '/vagrant/wordpress/');
     define('THEME_ABSOLUTE_PATH',  '/vagrant/wordpress/wp-content/themes/example-theme-master/');
     $config_file_path = ABSPATH . 'wp-tests-config.php';
 
+}else{
+
+    // Or on Travis-ci
+    define('THEME_ABSOLUTE_PATH',  ABSPATH . '/wp-content/themes/example-theme-master/');
+    $config_file_path = ABSPATH . '../wp-tests-config.php';
+
 }
+
 
 /*
  * Globalize some WordPress variables, because PHPUnit loads this file inside a function
