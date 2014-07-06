@@ -76,7 +76,7 @@ You can also contribute with the documentation in the [separated repository](htt
 
 ## Contributing
 
-Feel free to help to improve Alter, you can make pull requests or improve the [documentation](https://github.com/alterfw/docs) also.
+Fell free to help to improve Alter, you can make pull requests or improve the [documentation](https://github.com/alterfw/docs) also.
 
 If you make a Pull Request of a new feature, make sure to link the [documentation](https://github.com/alterfw/docs) Pull Request and to write the respective tests.
 
@@ -84,7 +84,7 @@ If you make a Pull Request of a new feature, make sure to link the [documentatio
 
 We use [Vagrant](http://vagrantup.com/) to create the Alter Development Environment. To setup, follow this instructions:
 
-Clone or fork of [Vagrantpress](http://vagrantpress.org/):
+Clone our fork of [Vagrantpress](http://vagrantpress.org/):
 
 	git clone https://github.com/alterfw/vagrantpress
 
