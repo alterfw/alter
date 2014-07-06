@@ -96,7 +96,7 @@ And start the virtual machine:
 So, with the Vagrant VM on, you need to replace the alter dependency (installed over composer) by your clone of the repository;
 
 ```shell
-vagrant ssh // to enter in the machine
+vagrant ssh
 cd /vagrant/wordpress/wp-content/themes/example-theme/vendor/alterfw
 rm -rf alter
 git clone git@github.com:alterfw/alter.git
