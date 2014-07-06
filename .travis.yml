@@ -44,7 +44,7 @@ before_script:
     - cd /tmp/wordpress/src/wp-content/themes/example-theme-master
     - wget http://getcomposer.org/composer.phar -O composer.phar
     - php composer.phar install
-    - rm -fv vendor/alterfw/alter
+    - rm -rf vendor/alterfw/alter
     - mv "$PLUGIN_SLUG" "/tmp/wordpress/src/wp-content/themes/example-theme-master/vendor/alterfw/alter"
     - cd /tmp/wordpress
     - mysql -e "CREATE DATABASE wordpress_tests;" -uroot
