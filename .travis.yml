@@ -52,6 +52,7 @@ before_script:
     - sed -i "s/youremptytestdbnamehere/wordpress_tests/" wp-tests-config.php
     - sed -i "s/sergiovilar/travis/" wp-tests-config.php
     - sed -i "s/zEbUtawSJyxARz6WVL4h//" wp-tests-config.php
+    - ls
     - cd /tmp/wordpress/src/wp-content/themes/example-theme-master/vendor/alterfw/alter
 
 script: phpunit
