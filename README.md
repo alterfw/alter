@@ -5,48 +5,6 @@ Alter
 
 A small framework that provides the way to develop model-based Wordpress themes
 
-### How this works?
-
-Alter provides the way to develop model-based Wordpress themes, using models you can easily create post types, custom meta-boxes, and access the post properties
-
-```php
-<?php
-class carModel extends AppModel{
-	
-	public $fields = array(
-
-		// Default Wordpress fields
-		'editor'	=> true,
-		'title'		=> true,
-		'thumbnail'	=> true,
-
-		// Custom fields
-		'manufacturer'	=> array(
-			'label'		=> 'Manufacturer',
-			'type'		=> 'text'	
-		)
-
-	)
-
-}
-```
-
-### Stop using Wordpress functions
-
-The Wordpress-way to get post properties like thumbnails and custom post fields is very painful, with Alter we made this simple.
-
-```php
-<?php
-
-foreach($app->car->find() as $car){
-	
-	echo $car->title;
-	echo $car->manufacturer;
-	echo "<img src='". $car->thumbnail->medium ."' />";
-
-}
-```
-
 ## Installation
 
 Create a `composer.json` for your theme:
