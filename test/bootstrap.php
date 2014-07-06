@@ -50,4 +50,6 @@ require dirname( __FILE__ ) . '/lib/testcase.php';
 require dirname( __FILE__ ) . '/lib/exceptions.php';
 require dirname( __FILE__ ) . '/lib/Alter_UnitTestCase.php';
 
+switch_theme( 'example-theme-master', 'Alter Example Theme' );
+
 require_once THEME_ABSOLUTE_PATH . '/functions.php';
