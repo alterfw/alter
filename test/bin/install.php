@@ -71,4 +71,6 @@ if ( defined('WP_ALLOW_MULTISITE') && WP_ALLOW_MULTISITE ) {
 
 }
 
+switch_theme( 'example-theme-master', 'Alter Example Theme' );
+
 file_put_contents( WP_TESTS_VERSION_FILE, test_version_check_hash() );
