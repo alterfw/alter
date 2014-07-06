@@ -41,9 +41,11 @@ before_script:
     - wget https://github.com/alterfw/example-theme/archive/master.tar.gz
     - tar xzvf master.tar.gz
     - mv "example-theme-master" "/tmp/wordpress/src/wp-content/themes/"
-    - wget http://getcomposer.org/composer.phar -O /tmp/wordpress/src/wp-content/themes/example-theme-master/composer.phar
-    - php /tmp/wordpress/src/wp-content/themes/example-theme-master/composer.phar install
-    - rm -rf /tmp/wordpress/src/wp-content/themes/example-theme-master/vendor/alterfw/alter
+    - cd /tmp/wordpress/src/wp-content/themes/example-theme-master
+    - wget http://getcomposer.org/composer.phar -O composer.phar
+    - php composer.phar install
+    - rm -rf vendor/alterfw/alter
+    - cd /home/travis/build/alterfw
     - mv "$PLUGIN_SLUG" "/tmp/wordpress/src/wp-content/themes/example-theme-master/vendor/alterfw/alter"
     - cd /tmp/wordpress
     - mysql -e "CREATE DATABASE wordpress_tests;" -uroot
