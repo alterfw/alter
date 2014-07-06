@@ -14,6 +14,8 @@ class Alter_UnitTestCase extends WP_UnitTestCase{
         parent::setUp();
         //include_once THEME_ABSOLUTE_PATH. "/functions.php";
         switch_theme( 'example-theme-master', 'Alter Example Theme' );
+        global $app;
+        $this->app = $app;
 
     }
 

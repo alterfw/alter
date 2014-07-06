@@ -23,4 +23,10 @@ class WP_Test_Alter_Models extends Alter_UnitTestCase {
 
     }
 
+    function test_models_return(){
+
+        $this->assertFalse(is_array($this->app->book->find()), 'Check if the model->find() method returns false (empty)');
+
+    }
+
 }
