@@ -78,7 +78,7 @@ You can also contribute with the documentation in the [separated repository](htt
 
 Feel free to help to improve Alter, you can make pull requests or improve the [documentation](https://github.com/alterfw/docs) also.
 
-If you make a Pull Request of a new feature, make sure to link the [documentation](https://github.com/alterfw/docs) Pull Request.
+If you make a Pull Request of a new feature, make sure to link the [documentation](https://github.com/alterfw/docs) Pull Request and to write the respective tests.
 
 ### Development Environment
 
@@ -92,4 +92,23 @@ And start the virtual machine:
 
 	cd vagrantpress;
 	vagrant up	
+
+So, with the Vagrant VM on, you need to replace the alter dependency (installed over composer) by your clone of the repository;
+
+```shell
+vagrant ssh // to enter in the machine
+cd /vagrant/wordpress/wp-content/themes/example-theme/vendor/alterfw
+rm -rf alter
+git clone git@github.com:alterfw/alter.git
+```	
+
+### Running the tests
+
+To run the tests you need first to setup the [development environment](#development-environment).
+
+After this you can run the tests simply:
+
+	cd /vagrant/wordpress/wp-content/themes/example-theme/vendor/alterfw/alter
+	phpunit
+
 
