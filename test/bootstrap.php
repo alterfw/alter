@@ -3,14 +3,16 @@
  * Installs WordPress for running the tests and loads WordPress and the test libraries
  */
 
+define('ABSPATH',  '/vagrant/wordpress/');
 error_reporting( E_ALL & ~E_DEPRECATED & ~E_STRICT );
 
-require_once 'PHPUnit/Autoload.php';
+//require_once 'PHPUnit/Autoload.php';
 
 $config_file_path = ABSPATH . '/wp-tests-config.php';
 
 /*
  * Globalize some WordPress variables, because PHPUnit loads this file inside a function
+ * See: https://github.com/sebastianbergmann/phpunit/issues/325
  * See: https://github.com/sebastianbergmann/phpunit/issues/325
  *
  * These are not needed for WordPress 3.3+, only for older versions

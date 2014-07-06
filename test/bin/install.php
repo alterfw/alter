@@ -5,10 +5,10 @@
  * @todo Reuse the init/load code in init.php
  */
 error_reporting( E_ALL & ~E_DEPRECATED & ~E_STRICT );
-
+define('ABSPATH', '/vagrant/wordpress/');
 $config_file_path = $argv[1];
 
-$config_dir = dirname( $config_file_path );
+$config_dir = ABSPATH . 'wp-content/themes/example-theme-master/vendor/alterfw/alter/test';
 
 define( 'WP_INSTALLING', true );
 require_once $config_file_path;
