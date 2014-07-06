@@ -9,7 +9,7 @@ define('THEME_ABSOLUTE_PATH',  '/tmp/wordpress/src/wp-content/themes/example-the
 
 //require_once 'PHPUnit/Autoload.php';
 
-$config_file_path = ABSPATH . 'wp-tests-config.php';
+$config_file_path = ABSPATH . '../wp-tests-config.php';
 
 /*
  * Globalize some WordPress variables, because PHPUnit loads this file inside a function
