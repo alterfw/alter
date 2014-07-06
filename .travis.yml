@@ -42,7 +42,7 @@ before_script:
     - tar xzvf master.tar.gz
     - mv "example-theme-master" "/tmp/wordpress/src/wp-content/themes/"
     - cd /tmp/wordpress/src/wp-content/themes/example-theme-master
-    - php composer install
+    - composer install
     - rm -rf vendor/alterfw/alter
     - cd /home/travis/build/alterfw
     - mv "$PLUGIN_SLUG" "/tmp/wordpress/src/wp-content/themes/example-theme-master/vendor/alterfw/alter"
