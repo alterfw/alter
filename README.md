@@ -1,6 +1,8 @@
 Alter
 =====
 
+[![Build Status](https://travis-ci.org/alterfw/alter.svg?branch=master)](https://travis-ci.org/alterfw/alter)
+
 A small framework that provides the way to develop model-based Wordpress themes
 
 ### How this works?
