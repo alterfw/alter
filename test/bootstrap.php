@@ -12,8 +12,8 @@ if(file_exists("/vagrant/wordpress/wp-tests-config.php")){
 }else{
 
     // Or on Travis-ci
-    if(!defined('ABSPATH')) define('ABSPATH',  '/vagrant/wordpress/');
-    $config_file_path = ABSPATH . '../wp-tests-config.php';
+    if(!defined('ABSPATH')) define('ABSPATH',  '/tmp/wordpress/src/');
+    $config_file_path = '/tmp/wordpress/wp-tests-config.php';
 
 }
 
