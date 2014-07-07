@@ -34,6 +34,7 @@ require_once  __DIR__."/exceptions/NoPostFoundException.php";
 // Framework Classes
 require_once __DIR__ . "/core/App.php";
 require_once __DIR__ . "/core/Post.php";
+require_once __DIR__ . "/core/Model.php";
 require_once __DIR__ . "/core/Loader.php";
 require_once __DIR__ . "/api/Helper.php";
 require_once __DIR__ . "/api/AppModel.php";

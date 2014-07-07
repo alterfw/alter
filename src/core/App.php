@@ -21,9 +21,11 @@ class App {
 	public function registerModel($model){
 
 		$modelName = str_replace('model', '', strtolower(get_class($model)));
-		$this->{$modelName} = $model;
 
-		array_push($this->models, $model);
+		$modelItem = new Model($model);
+		$this->{$modelName} = $modelItem;
+
+		array_push($this->models, $modelItem);
 
 	}
 
