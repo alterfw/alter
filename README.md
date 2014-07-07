@@ -71,4 +71,5 @@ After this you can run the tests simply:
 	cd /vagrant/wordpress/wp-content/themes/example-theme-master/vendor/alterfw/alter
 	phpunit
 
+If you receive any errors running `phpunit`, run `vagrant provision` and try again.
 
