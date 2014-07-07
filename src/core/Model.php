@@ -59,10 +59,20 @@ class Model {
 
 	}
 
+	/**
+	 * Find a post by id
+	 * @param $id
+	 * @return PostObject
+	 */
 	public function findById($id){
 		return new PostObject(get_post($id), $this->appModel);
 	}
 
+	/**
+	 * Find a post by the slug
+	 * @param $slug
+	 * @return bool|PostObject
+	 */
 	public function findBySlug($slug){
 
 		$args = array(
@@ -82,6 +92,13 @@ class Model {
 
 	}
 
+	/**
+	 * Find posts by a taxonomy
+	 * @param $taxonomy
+	 * @param $value
+	 * @param $limit
+	 * @return bool|WP_Query
+	 */
 	public function findByTaxonomy($taxonomy, $value, $limit){
 
 		$options = array();
@@ -104,6 +121,12 @@ class Model {
 
 	}
 
+	/**
+	 * Paginate a list of posts
+	 * @param null $limit
+	 * @param null $paged
+	 * @return bool|WP_Query
+	 */
 	public function paginate($limit = null, $paged = null){
 
 		if($paged == null){
@@ -118,29 +141,35 @@ class Model {
 
 	}
 
+	/**
+	 * Creates a quer for WP_Query
+	 * @param null $options
+	 * @return array
+	 */
 	private function buildQuery($options = null){
 
 		$attrs = $this->getDefaultQuery();
 
 		if(!empty($options)){
 
+			// If is int means that it's a limit parameter
 			if(is_int($options)){
 				$options = array('limit' => $options);
 			}
 
-			// Posts limit
+			// But if is a array with the 'limit' index, too
 			if(!empty($options['limit'])){
 				$attrs['posts_per_page'] = $options['limit'];
 			}
 
-			// Check if has a manual query
-
+			// Check if is arguments for WP_Query
 			if(is_array($options)){
 				foreach($options as $key => $value){
 					$attrs[$key] = $value;
 				}
 			}
 
+			// Or if is arguments for WP_Query into 'query' index
 			if(!empty($options['query'])){
 
 				$arr = explode('&', $options['query']);
