@@ -59,10 +59,11 @@ class WP_Test_Alter_Models extends Alter_UnitTestCase {
         update_post_meta($post_id, 'genre', $book_genre);
 
         // ---- Act
-        $book = $this->app->book->find();
+        $book = $this->app->book->find($post_id);
 
         // ---- Assert
-        $this->assertInstanceOf('PostObject', $book);
+        $this->assertTrue(is_int($post_id), 'Assert if wp_insert_post returns a post id');
+        $this->assertInstanceOf('PostObject', $book, 'Assert if $book is a instance of PostObject');
         $this->assertEquals($book_author, $book->author, 'Asserts if the PostObject returns correctly the attribute author');
         $this->assertEquals($book_genre, $book->genre, 'Asserts if the PostObject returns correctly the attribute genre');
 
