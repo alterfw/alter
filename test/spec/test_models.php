@@ -49,7 +49,7 @@ class WP_Test_Alter_Models extends Alter_UnitTestCase {
         $book_genre = 'Fantasy';
 
         // Creates the post
-        $post_id = wp_insert_post( array(
+        $post_id = $this->factory->post->create( array(
             'post_type' => 'book',
             'post_title' => 'The Lord Of The Rings'
         ));
