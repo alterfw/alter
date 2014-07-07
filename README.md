@@ -62,6 +62,10 @@ So, with the Vagrant VM on, you need to replace the alter dependency (installed 
 
 **Note:** if you are using Windows you cannot use `vagrant ssh`, follow [this instructions](https://github.com/Varying-Vagrant-Vagrants/VVV/wiki/Connect-to-Your-Vagrant-Virtual-Machine-with-PuTTY) to setup PuTTY.
 
+### Writing the tests
+
+When writing tests please make sure to follow the [Arrange-Act-Assert](http://www.arrangeactassert.com/why-and-what-is-arrange-act-assert/) pattern.
+
 ### Running the tests
 
 To run the tests you need first to setup the [development environment](#development-environment).
