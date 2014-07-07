@@ -68,10 +68,6 @@ abstract class AppModel {
                 $attrs['limit'] = -1;
             }
 
-            if(is_int($options)){
-                return new PostObject(get_post($options), $this);
-            }
-
             $qr = new WP_Query($attrs);
 
             if(!$qr->have_posts()){
@@ -144,9 +140,11 @@ abstract class AppModel {
 
     }
 
-    public function paginate($limit = null){
+    public function paginate($limit = null, $paged = null){
 
-        $paged = ( get_query_var('paged') ) ? get_query_var('paged') : 1;
+		if($paged == null){
+			$paged = ( get_query_var('paged') ) ? get_query_var('paged') : 1;
+		}
 
         if(empty($limit)){
             $limit = get_option('posts_per_page');
@@ -310,11 +308,13 @@ abstract class AppModel {
             'capabilities'        => $capabilities,
         );
 
-        if(!empty($this->route))
-            $args['rewrite'] = array('slug' => $this->route, 'with_front' => true);
+        if(!empty($this->route)){
+			$args['rewrite'] = array('slug' => $this->route, 'with_front' => true);
+		}
 
-        if($this->post_type != 'page')
-            register_post_type( $this->post_type , $args );
+        if($this->post_type != 'page'){
+			register_post_type( $this->post_type , $args );
+		}
 
     }
 
