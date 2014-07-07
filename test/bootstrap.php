@@ -32,7 +32,6 @@ global $table_prefix, $wp_embed, $wp_locale, $_wp_deprecated_widgets_callbacks, 
 global $wpdb, $current_site, $current_blog, $wp_rewrite, $shortcode_tags, $wp;
 
 //define( 'WPMU_PLUGIN_DIR', dirname( __FILE__ ) . '/mu-plugins' );
-
 require_once $config_file_path;
 
 $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
@@ -47,6 +46,7 @@ require dirname( __FILE__ ) . '/lib/functions.php';
 require_once ABSPATH . '/wp-settings.php';
 
 require dirname( __FILE__ ) . '/lib/testcase.php';
+require dirname( __FILE__ ) . '/lib/factory.php';
 require dirname( __FILE__ ) . '/lib/exceptions.php';
 require dirname( __FILE__ ) . '/lib/Alter_UnitTestCase.php';
 
