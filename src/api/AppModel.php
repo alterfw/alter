@@ -68,6 +68,10 @@ abstract class AppModel {
                 $attrs['limit'] = -1;
             }
 
+            if(is_int($options)){
+                return new PostObject(get_post($options), $this);
+            }
+
             $qr = new WP_Query($attrs);
 
             if(!$qr->have_posts()){
