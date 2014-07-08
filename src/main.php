@@ -43,6 +43,7 @@ require_once __DIR__ . "/api/AppTaxonomy.php";
 require_once __DIR__ . "/api/AdminPage.php";
 require_once __DIR__ . "/api/theme-options/loader.php";
 require_once __DIR__ . "/api/AppTheme.php";
+require_once __DIR__ . "/utility/BoxObject.php";
 require_once __DIR__ . "/utility/RegisterMetabox.php";
 
 // Initialize the app
