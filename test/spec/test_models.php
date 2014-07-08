@@ -202,6 +202,30 @@ class WP_Test_Alter_Models extends Alter_UnitTestCase {
 
     }
 
+    /**
+     * This method tests if an exception was thrown accessing a automagic method that doesn't exists
+     */
+    function tests_model_find_automatic_exception(){
+
+        $post_id = $this->factory->post->create_many(100, array(
+            'post_type' => 'book'
+        ));
+
+        // ---- Act
+
+        try{
+
+            $book = $this->app->book->findByName(1); // This method doesn' exists
+
+        }catch(Exception $e){
+
+            // ---- Assert
+            $this->assertEquals($e->getMessage(), "Trying to access a method that doesn't exists");
+
+        }
+
+    }
+
 
 	/**
 	 * This method tests the result of finding by a taxonomy on the model

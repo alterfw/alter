@@ -71,7 +71,7 @@ class Model {
 
             }else{
 
-                return false;
+                throw new Exception("Trying to access a method that doesn't exists");
 
             }
 
