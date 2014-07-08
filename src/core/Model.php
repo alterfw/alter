@@ -127,15 +127,6 @@ class Model {
 	}
 
 	/**
-	 * Find a post by id
-	 * @param $id
-	 * @return PostObject
-	 */
-//	public function findById($id){
-//		return new PostObject(get_post($id), $this->appModel);
-//	}
-
-	/**
 	 * Find a post by the slug
 	 * @param $slug
 	 * @return bool|PostObject
