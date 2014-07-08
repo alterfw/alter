@@ -55,12 +55,16 @@ And start the virtual machine:
 
 So, with the Vagrant VM on, you need to replace the alter dependency (installed over composer) by your clone of the repository;
 
-```shell
-vagrant ssh
-cd /vagrant/wordpress/wp-content/themes/example-theme-master/vendor/alterfw
-rm -rf alter
-git clone git@github.com:alterfw/alter.git
-```	
+	vagrant ssh
+	cd /vagrant/wordpress/wp-content/themes/example-theme-master/vendor/alterfw
+	rm -rf alter
+	git clone git@github.com:alterfw/alter.git
+
+**Note:** if you are using Windows you cannot use `vagrant ssh`, follow [this instructions](https://github.com/Varying-Vagrant-Vagrants/VVV/wiki/Connect-to-Your-Vagrant-Virtual-Machine-with-PuTTY) to setup PuTTY.
+
+### Writing the tests
+
+When writing tests please make sure to follow the [Arrange-Act-Assert](http://www.arrangeactassert.com/why-and-what-is-arrange-act-assert/) pattern.
 
 ### Running the tests
 
@@ -71,4 +75,5 @@ After this you can run the tests simply:
 	cd /vagrant/wordpress/wp-content/themes/example-theme-master/vendor/alterfw/alter
 	phpunit
 
+If you receive any errors running `phpunit`, run `vagrant provision` and try again.
 
