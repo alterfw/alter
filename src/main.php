@@ -13,6 +13,7 @@ define('__DIR__', realpath(dirname(__FILE__)));
 define('THEME_PATH', get_bloginfo('template_url'));
 if(!defined('THEME_ABSOLUTE_PATH')) define('THEME_ABSOLUTE_PATH', get_template_directory());
 define('ALTER', get_template_directory() . "/vendor/alterfw/alter/");
+define('WD_BASE_URL', THEME_PATH . "/vendor/alterfw/wordpress-for-developers" );
 define('RWMB_URL', THEME_PATH . "/vendor/alterfw/meta-box/" );
 define('RWMB_DIR', THEME_ABSOLUTE_PATH . "/vendor/alterfw/meta-box/" );
 
