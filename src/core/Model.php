@@ -16,7 +16,70 @@ class Model {
 		$this->appModel = $appModel;
 	}
 
-	/**
+    function __call($method, $arguments){
+
+        $non_custom_allowed = array('id', 'status', 'category', 'author', 'date');
+
+        if(is_array($arguments) && count($arguments) > 1){
+            $findvalue = join(",", $arguments);
+        }else{
+            $findvalue = $arguments[0];
+        }
+
+        $custom_fields = array();
+        foreach($this->appModel->getFields() as $field => $value){
+            if(is_array($value)) $custom_fields[$field] = $value;
+        }
+
+        $attribute = str_replace("find_by_", "", $this->from_camel_case($method));
+
+        if(in_array($attribute, $non_custom_allowed)){
+
+            $key = null;
+
+            switch($attribute){
+
+                case 'id':
+                    $key = 'p';
+                    break;
+
+                case 'status':
+                    $key = 'post_status';
+                    break;
+
+                case 'category':
+                    $key = 'cat';
+                    break;
+
+                case 'author':
+                    $key = 'author';
+                    break;
+
+                case 'date':
+                    $key = 'date_query';
+                    break;
+
+            }
+
+            return $this->find(array( $key => $findvalue));
+
+        }else{
+
+            if(!empty($custom_fields[$attribute])){
+
+                return $this->find(array('meta_key' => $attribute, 'meta_value' => $findvalue));
+
+            }else{
+
+                return false;
+
+            }
+
+        }
+
+    }
+
+    /**
 	 * Find posts in the Wordpress database using WP_Query
 	 *
 	 * @param $options
@@ -31,6 +94,10 @@ class Model {
 			if(empty($attrs['limit'])){
 				$attrs['limit'] = -1;
 			}
+
+            if(!empty($attrs['p'])){
+                return new PostObject(get_post($attrs['p']), $this->appModel);
+            }
 
 			$qr = new WP_Query($attrs);
 
@@ -64,9 +131,9 @@ class Model {
 	 * @param $id
 	 * @return PostObject
 	 */
-	public function findById($id){
-		return new PostObject(get_post($id), $this->appModel);
-	}
+//	public function findById($id){
+//		return new PostObject(get_post($id), $this->appModel);
+//	}
 
 	/**
 	 * Find a post by the slug
@@ -202,5 +269,16 @@ class Model {
 		);
 
 	}
+
+    /**
+     * Extracts method name
+     * @param $str
+     * @return mixed
+     */
+    private function from_camel_case($str) {
+        $str[0] = strtolower($str[0]);
+        $func = create_function('$c', 'return "_" . strtolower($c[1]);');
+        return preg_replace_callback('/([A-Z])/', $func, $str);
+    }
 
 } 

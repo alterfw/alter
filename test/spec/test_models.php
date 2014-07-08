@@ -158,6 +158,51 @@ class WP_Test_Alter_Models extends Alter_UnitTestCase {
 
 	}
 
+    /**
+     * This method tests the reflection api with Alter and custom fields
+     */
+    function test_models_find_automagic_custom_field(){
+
+        // ---- Arrange
+        $post_id = $this->factory->post->create( array(
+            'post_type' => 'book'
+        ));
+
+        // Add the custom fields
+        update_post_meta($post_id, 'author', 'J. R. R. Tolkien');
+        update_post_meta($post_id, 'genre', 'Fantasy');
+
+        // ---- Act
+        $book = $this->app->book->findByGenre('Fantasy');
+
+        // ---- Assert
+        $this->assertTrue(is_array($book));
+        $this->assertInstanceOf('PostObject', $book[0]);
+        $this->assertEquals($book[0]->genre, 'Fantasy');
+
+    }
+
+    /**
+     * This method tests the reflection api with alter and default allowed fields
+     */
+    function test_models_find_automagic_author(){
+
+        // ---- Arrange
+        $post_id = $this->factory->post->create_many(100, array(
+            'post_type' => 'book',
+            'post_author' => 1
+        ));
+
+        // ---- Act
+        $book = $this->app->book->findByAuthor(1);
+
+        // ---- Assert
+        $this->assertTrue(is_array($book));
+        $this->assertInstanceOf('PostObject', $book[0]);
+
+    }
+
+
 	/**
 	 * This method tests the result of finding by a taxonomy on the model
 	 */
