@@ -1,6 +1,5 @@
 <?php
 
-
 class OPT
 {
     /**
@@ -73,6 +72,12 @@ class OPT
         return $this->get($var);
     }
 
+    public function __call($name, $args)
+    {
+        array_unshift($args, $name);
+        return call_user_func_array(array($this, 'get'), $args);
+    }
+
     /**
      * @return \OptionTree
      */
@@ -111,10 +116,14 @@ function loadThemeOptioninstance()
 }
 
 /**
- * @return OPT
+ * @return string|mixed|OPT
  */
-function OPT()
+function OPT($key = null, $default = null)
 {
     global $OPT;
-    return $OPT;
+    if (empty($key)):
+        return $OPT;
+    endif;
+
+    return $OPT->get($key, $default);
 }
