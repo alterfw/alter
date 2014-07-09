@@ -13,6 +13,7 @@ define('__DIR__', realpath(dirname(__FILE__)));
 define('THEME_PATH', get_bloginfo('template_url'));
 if(!defined('THEME_ABSOLUTE_PATH')) define('THEME_ABSOLUTE_PATH', get_template_directory());
 define('ALTER', get_template_directory() . "/vendor/alterfw/alter/");
+define('WD_BASE_URL', THEME_PATH . "/vendor/alterfw/wordpress-for-developers" );
 define('RWMB_URL', THEME_PATH . "/vendor/alterfw/meta-box/" );
 define('RWMB_DIR', THEME_ABSOLUTE_PATH . "/vendor/alterfw/meta-box/" );
 
@@ -29,7 +30,7 @@ require_once THEME_ABSOLUTE_PATH . "/vendor/alterfw/meta-box/meta-box.php";
 // ---- Import framework Classes
 
 // Exceptions
-require_once  __DIR__."/exceptions/NoPostFoundException.php";
+require_once __DIR__ . "/exceptions/NoPostFoundException.php";
 
 // Framework Classes
 require_once __DIR__ . "/core/App.php";
@@ -38,15 +39,18 @@ require_once __DIR__ . "/core/Model.php";
 require_once __DIR__ . "/core/Loader.php";
 require_once __DIR__ . "/api/Helper.php";
 require_once __DIR__ . "/api/AppModel.php";
-require_once __DIR__ . "/api/OptionPage.php";
 require_once __DIR__ . "/api/AppTaxonomy.php";
 require_once __DIR__ . "/api/AdminPage.php";
+require_once __DIR__ . "/api/theme-options/loader.php";
+require_once __DIR__ . "/api/AppTheme.php";
+require_once __DIR__ . "/utility/BoxObject.php";
 require_once __DIR__ . "/utility/RegisterMetabox.php";
 
 // Initialize the app
-global $app, $h;
+global $app, $h, $appTheme;
 $app = new App();
 $h = new Helper();
+$appTheme = new AppTheme();
 
 // Load the user files
 new Loader($app);

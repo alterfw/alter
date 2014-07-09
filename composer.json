@@ -2,13 +2,13 @@
     "name": "alterfw/alter",
     "description": "A small framework that provides the way to develop model-based Wordpress themes",
     "license": "MIT",
-    "authors": [
-        {
-            "name": "Sergio Vilar",
-            "email": "vilar@me.com"
-        }
-    ],    
+    "authors": [{
+        "name": "Sergio Vilar",
+        "email": "vilar@me.com"
+    }],
+
     "require": {
+        "valendesigns/option-tree": "dev-master",
         "alterfw/meta-box": "dev-master",
         "alterfw/wordpress-for-developers": "dev-master"
     },
@@ -20,4 +20,3 @@
         "files": ["src/main.php"]
     }
 }
-

@@ -29,7 +29,9 @@ class Loader
 		// User Models, Views and Controllers
 		$rw = new RegisterMetabox();
 
-		foreach ($this->folders as $folder) {
+		$folders = apply_filters('alter_folders', $this->folders);
+
+		foreach ($folders as $folder) {
 
 			foreach (glob(THEME_ABSOLUTE_PATH . '/' . $folder . "/*.php") as $file) {
 

@@ -1,22 +1,33 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: sergiovilar
  * Date: 02/05/14
  * Time: 10:48 PM
  */
+abstract class AppModel
+{
 
-abstract class AppModel {
-
+    public $fields = array();
+    public $taxonomies = array();
+    public $labels = array();
+    public $capabilities = array();
+    public $args = array();
+    public $supports = array();
+    public $icon = 'dashicons-admin-post';
+    public $capability_type = 'page';
+    public $text_domain = 'text_domain';
+    public $singular;
+    public $plural;
+    public $description;
+    public $route;
     private $post_type;
 
-    function __construct(){
-
-        // Define the post_type by convention (Ex: PostModel);
-        $this->post_type = strtolower(str_replace('Model', '', get_class($this)));
-
+    function __construct()
+    {
         // Register the meta-boxes and post-type
-        add_action( 'init', array($this, 'registerPostType'), 0 );
+        add_action('init', array($this, 'registerPostType'), 0);
 
     }
 
@@ -25,22 +36,94 @@ abstract class AppModel {
      */
     public function getFields()
     {
-
-        if(!empty($this->fields)){
-            return $this->fields;
-        }else{
-            return false;
-        }
-
+        return (empty($this->fields)) ? false : $this->fields;
     }
 
-    public function getTaxonomies(){
+    /**
+     * Register the post type
+     */
+    public function registerPostType()
+    {
+        $post_type       = $this->getPostType();
+        $singular        = (empty($this->singular)) ? ucfirst($post_type) : $this->singular;
+        $plural          = (empty($this->plural)) ? ucfirst($post_type) . 's' : $this->plural;
+        $tax             = ($this->getTaxonomies()) ? $this->getTaxonomies() : array();
+        $capability_type = $this->capability_type;
+        $capabilities    = $this->capabilities;
 
-        if(!empty($this->taxonomies)){
-            return $this->taxonomies;
-        }else{
-            return false;
-        }
+
+        if (empty($this->icon)):
+            $icon = 'dashicons-admin-post';
+        else:
+            if (strpos($this->icon, '.') > 0):
+                $icon = ALTER_IMG . $this->icon;
+            else:
+                $icon = $this->icon;
+            endif;
+        endif;
+
+        $supports           = array();
+        $_supportsAvailable = array('title', 'editor', 'thumbnail', 'comments');
+
+        if (!empty($this->fields)) :
+            foreach ($_supportsAvailable as $value):
+                if (isset($this->fields[$value]) and $this->fields[$value]) array_push($supports, $value);
+            endforeach;
+        endif;
+
+        $supports = array_merge($supports, $this->supports);
+        if (empty($supports)) $supports = false;
+
+        $labels = wp_parse_args(
+           $this->labels,
+           array(
+              'name'               => __($plural),
+              'singular_name'      => __($singular),
+              'menu_name'          => __($plural),
+              'parent_item_colon'  => __('Parent Item:'),
+              'all_items'          => __($plural),
+              'view_item'          => __('View') . ' ' . __($plural),
+              'add_new_item'       => __('Add') . ' ' . __($singular),
+              'add_new'            => __('Add') . ' ' . __($singular),
+              'edit_item'          => __('Edit') . ' ' . __($singular),
+              'update_item'        => __('Update') . ' ' . __($singular),
+              'search_items'       => __('Search') . ' ' . __($singular),
+              'not_found'          => __('Not found'),
+              'not_found_in_trash' => __('Not found in Trash'),
+           )
+        );
+
+        $args = array(
+           'label'               => __($post_type, $this->text_domain),
+           'description'         => __($this->description, $this->text_domain),
+           'labels'              => $labels,
+           'supports'            => $supports,
+           'taxonomies'          => $tax,
+           'hierarchical'        => false,
+           'public'              => true,
+           'show_ui'             => true,
+           'show_in_menu'        => true,
+           'show_in_nav_menus'   => true,
+           'show_in_admin_bar'   => true,
+           'menu_position'       => 5,
+           'menu_icon'           => $icon,
+           'can_export'          => true,
+           'has_archive'         => true,
+           'exclude_from_search' => false,
+           'publicly_queryable'  => true,
+           'capability_type'     => $capability_type,
+           'capabilities'        => $capabilities,
+        );
+
+        if (!empty($this->route)):
+            $args['rewrite'] = array('slug' => $this->route, 'with_front' => true);
+        endif;
+
+        $args = wp_parse_args($this->args, $args);
+
+        if ($post_type != 'page'):
+            register_post_type($post_type, $args);
+        endif;
 
     }
 
@@ -49,115 +132,32 @@ abstract class AppModel {
      */
     public function getPostType()
     {
+        if (empty($post_type)):
+            // Define the post_type by convention (Ex: PostModel);
+            $this->post_type = strtolower(str_replace('Model', '', get_class($this)));
+        else:
+            $this->post_type = $post_type;
+        endif;
+
         return $this->post_type;
     }
 
     /**
-     * Register the post type
+     * @param string $post_type
      */
-    public function registerPostType(){
+    public function setPostType($post_type)
+    {
+        if (!empty($post_type)):
+            $this->post_type = $post_type;
+        endif;
+    }
 
-        if(!isset($this->singular)){
-            $this->singular = ucfirst($this->post_type);
-        }
-
-        if(!isset($this->plural)){
-            $this->plural = ucfirst($this->post_type) . 's';
-        }
-
-        if(!isset($this->description)){
-            $this->description = '';
-        }
-
-        if(!isset($this->icon)){
-            $icon = 'dashicons-admin-post';
-        }else{
-
-            if(strpos($this->icon, '.') > 0){
-                $icon = ALTER_IMG . $this->icon;
-            }else{
-                $icon = $this->icon;
-            }
-
-        }
-
-        $tax = array();
-
-        if(!empty($this->taxonomies))
-            $tax = $this->taxonomies;
-
-        $supports = array();
-
-        if(!empty($this->fields))
-
-            foreach($this->fields as $key => $value){
-
-                if(($key =='title' || $key == 'editor' || $key == 'thumbnail' || $key == 'comments') && $value){
-                    array_push($supports, $key);
-                }
-
-            }
-
-        if(count($supports) == 0) $supports = false;
-
-        if(!empty($this->capability_type)){
-            $capability_type = $this->capability_type;
-        }else{
-            $capability_type = 'page';
-        }
-
-        if(!empty($this->capabilities)){
-            $capabilities = $this->capabilities;
-        }else{
-            $capabilities = array();
-        }
-
-        $labels = array(
-            'name'                => __($this->plural),
-            'singular_name'       => __($this->singular),
-            'menu_name'           => __($this->plural),
-            'parent_item_colon'   => __( 'Parent Item:'),
-            'all_items'           => __($this->plural),
-            'view_item'           => __( 'View') . ' '. __($this->plural),
-            'add_new_item'        => __( 'Add' ) . ' '. __($this->singular),
-            'add_new'             => __( 'Add') .' '. __($this->singular),
-            'edit_item'           => __( 'Edit') . ' '. __($this->singular),
-            'update_item'         => __( 'Update'). ' '. __($this->singular),
-            'search_items'        => __( 'Search'). ' '. __($this->singular),
-            'not_found'           => __( 'Not found'),
-            'not_found_in_trash'  => __( 'Not found in Trash'),
-        );
-
-        $args = array(
-            'label'               => __( $this->post_type , 'text_domain' ),
-            'description'         => __( $this->description, 'text_domain' ),
-            'labels'              => $labels,
-            'supports'            => $supports,
-            'taxonomies'          => $tax,
-            'hierarchical'        => false,
-            'public'              => true,
-            'show_ui'             => true,
-            'show_in_menu'        => true,
-            'show_in_nav_menus'   => true,
-            'show_in_admin_bar'   => true,
-            'menu_position'       => 5,
-            'menu_icon'           => $icon,
-            'can_export'          => true,
-            'has_archive'         => true,
-            'exclude_from_search' => false,
-            'publicly_queryable'  => true,
-            'capability_type'     => $capability_type,
-            'capabilities'        => $capabilities,
-        );
-
-        if(!empty($this->route)){
-			$args['rewrite'] = array('slug' => $this->route, 'with_front' => true);
-		}
-
-        if($this->post_type != 'page'){
-			register_post_type( $this->post_type , $args );
-		}
-
+    /**
+     * @return bool
+     */
+    public function getTaxonomies()
+    {
+        return (empty($this->taxonomies)) ? false : $this->taxonomies;
     }
 
 } 
