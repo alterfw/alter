@@ -43,6 +43,8 @@ abstract class OptionTree
         //require_once __DIR__ . "/../vendor/valendesigns/option-tree/ot-loader.php";
 
         add_action('admin_init', array($this, 'admin_init'));
+
+        $this->doRegister();
     }
 
     /**
@@ -760,4 +762,6 @@ abstract class OptionTree
         return $this->addOption($args);
 
     }
+
+    public function doRegister(){}
 }
