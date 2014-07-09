@@ -94,7 +94,7 @@ class BoxObject
      */
     private function clearFields(array $fields)
     {
-        $remove = array('title', 'editor', 'thumbnail');
+        $remove = array('title', 'editor', 'thumbnail', 'comments');
         foreach ($remove as $r):
             if (isset($fields[$r])) unset($fields[$r]);
         endforeach;
