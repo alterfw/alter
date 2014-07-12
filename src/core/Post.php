@@ -12,7 +12,7 @@ class PostObject {
 
         $object = array();
 
-        $fields = $model->fields;
+        $fields = $model->getFields();
         $taxonomies = $model->getTaxonomies();
 
         $modelDefaultFields = array('title', 'thumbnail', 'editor');

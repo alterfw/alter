@@ -9,6 +9,8 @@
 abstract class AppModel {
 
     private $post_type;
+    private $default_post_type = array('post', 'page');
+    protected $fields;
 
     function __construct(){
 
@@ -16,7 +18,9 @@ abstract class AppModel {
         $this->post_type = strtolower(str_replace('Model', '', get_class($this)));
 
         // Register the meta-boxes and post-type
-        add_action( 'init', array($this, 'registerPostType'), 0 );
+        if(!in_array($this->post_type, $this->default_post_type)){
+            add_action( 'init', array($this, 'registerPostType'), 0 );
+        }
 
     }
 
@@ -29,7 +33,7 @@ abstract class AppModel {
         if(!empty($this->fields)){
             return $this->fields;
         }else{
-            return false;
+            return array();
         }
 
     }
@@ -39,7 +43,7 @@ abstract class AppModel {
         if(!empty($this->taxonomies)){
             return $this->taxonomies;
         }else{
-            return false;
+            return array();
         }
 
     }
@@ -90,7 +94,7 @@ abstract class AppModel {
 
         if(!empty($this->fields))
 
-            foreach($this->fields as $key => $value){
+            foreach($this ->fields as $key => $value){
 
                 if(($key =='title' || $key == 'editor' || $key == 'thumbnail' || $key == 'comments') && $value){
                     array_push($supports, $key);
