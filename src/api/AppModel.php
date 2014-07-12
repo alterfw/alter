@@ -94,7 +94,7 @@ abstract class AppModel {
 
         if(!empty($this->fields))
 
-            foreach($this ->fields as $key => $value){
+            foreach($this->fields as $key => $value){
 
                 if(($key =='title' || $key == 'editor' || $key == 'thumbnail' || $key == 'comments') && $value){
                     array_push($supports, $key);
