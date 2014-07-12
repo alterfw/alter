@@ -27,9 +27,18 @@ class PostObject {
         // Permalink
         $this->permalink = get_permalink($this->ID);
 
+        // Default post taxonomies
         if($model->getPostType() == "post" && empty($taxonomies)){
             $taxonomies = array("post_tag", "category");
         }
+
+        // Author
+        $author = new stdClass();
+        foreach(array('ID', 'display_name', 'nickname', 'first_name', 'last_name', 'description', 'email') as $field){
+            $author->{$field} = get_the_author_meta( $field, $this->author );
+        }
+
+        $this->author = $author;
 
         // Terms
         if( !empty($taxonomies))
