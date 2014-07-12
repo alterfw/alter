@@ -35,7 +35,16 @@ class PostObject {
         if( !empty($taxonomies))
 
             foreach($taxonomies as $taxonomy){
-                $this->{$taxonomy} = wp_get_post_terms( $this->ID, $taxonomy);
+
+                $terms = array();
+                $obj = get_the_terms( $this->ID, $taxonomy );
+
+                foreach($obj as $term){
+                    $term->link = get_term_link($term->term_id, $taxonomy);
+                    array_push($terms, $term);
+                }
+
+                $this->{$taxonomy} = $terms;
             }
 
         // Custom fields
