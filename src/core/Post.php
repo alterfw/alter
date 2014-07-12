@@ -27,6 +27,10 @@ class PostObject {
         // Permalink
         $this->permalink = get_permalink($this->ID);
 
+        if($model->getPostType() == "post" && empty($taxonomies)){
+            $taxonomies = array("post_tag", "category");
+        }
+
         // Terms
         if( !empty($taxonomies))
 
