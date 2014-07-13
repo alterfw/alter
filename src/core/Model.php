@@ -16,15 +16,29 @@ class Model {
 		$this->appModel = $appModel;
 	}
 
+    /**
+     * Automagic Methods
+     * @param $method
+     * @param $arguments array, first value is the value to find, the second is a query
+     * @return bool|WP_Query
+     * @throws Exception
+     */
     function __call($method, $arguments){
+
+        $qr = array();
 
         $non_custom_allowed = array('id', 'status', 'category', 'author', 'date');
 
-        if(is_array($arguments) && count($arguments) > 1){
-            $findvalue = join(",", $arguments);
-        }else{
-            $findvalue = $arguments[0];
+        $findvalue = $arguments[0];
+
+        if(!empty($arguments[1]) && count($arguments[1]) > 0){
+
+            foreach($arguments[1] as $f => $v){
+                $qr[$f] = $v;
+            }
+
         }
+
 
         $custom_fields = array();
         foreach($this->appModel->getFields() as $field => $value){
@@ -61,13 +75,18 @@ class Model {
 
             }
 
-            return $this->find(array( $key => $findvalue));
+            $qr[$key] = $findvalue;
+
+            return $this->find($qr);
 
         }else{
 
             if(!empty($custom_fields[$attribute])){
 
-                return $this->find(array('meta_key' => $attribute, 'meta_value' => $findvalue));
+                $qr['meta_key'] = $attribute;
+                $qr['meta_value'] = $findvalue;
+
+                return $this->find($qr);
 
             }else{
 
