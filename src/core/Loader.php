@@ -48,22 +48,32 @@ class Loader
 
     private function loadFile($file){
 
-        $name = str_replace('.php', '', $file);
-        $name_arr = explode('/', $name);
-        $name = $name_arr[count($name_arr) - 1];;
+        try{
 
-        require $file;
+            $name = str_replace('.php', '', $file);
+            $name_arr = explode('/', $name);
+            $name = $name_arr[count($name_arr) - 1];;
 
-        $instance = new $name;
+            require $file;
 
-        // Register the meta-boxes if is a model
-        if (is_subclass_of($instance, 'AppModel')) {
-            $this->app->registerModel($instance);
-            $this->rw->add($instance->getPostType(), $instance->getFields());
-        }
+            if(!class_exists($name)){
+                throw new InvalidArgumentException("The class " . $name ." cannot be found, please check if the file and class name is correct");
+            }
 
-        if (is_subclass_of($instance, 'OptionPage')) {
-            $this->app->registerOption($instance);
+            $instance = new $name;
+
+            // Register the meta-boxes if is a model
+            if (is_subclass_of($instance, 'AppModel')) {
+                $this->app->registerModel($instance);
+                $this->rw->add($instance->getPostType(), $instance->getFields());
+            }
+
+            if (is_subclass_of($instance, 'OptionPage')) {
+                $this->app->registerOption($instance);
+            }
+
+        }catch(InvalidArgumentException $e){
+                trigger_error($e->getMessage(), E_USER_WARNING);
         }
 
     }
