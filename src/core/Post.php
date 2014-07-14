@@ -40,6 +40,8 @@ class PostObject {
 
         $this->author = $author;
 
+        $this->content = apply_filters('the_content', $this->content);
+
         // Terms
         if( !empty($taxonomies))
 
@@ -48,6 +50,7 @@ class PostObject {
                 $terms = array();
                 $obj = get_the_terms( $this->ID, $taxonomy );
 
+                if(is_array($obj))
                 foreach($obj as $term){
                     $term->link = get_term_link($term->term_id, $taxonomy);
                     array_push($terms, $term);

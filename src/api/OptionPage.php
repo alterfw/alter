@@ -33,6 +33,16 @@ abstract class OptionPage extends WD_Creator_Page_TopLevel{
                     $obj = Form::textarea($key);
                     break;
 
+                case 'multiple_choice':
+
+                    $obj = Form::checkboxes($key."[]"); // create a collection of checkboxeseaa
+
+                    foreach($value['options'] as $o => $v){
+                        $obj->add($o, $v);
+                    }
+
+                    break;
+
                 default:
                     $obj = Form::text($key);
 

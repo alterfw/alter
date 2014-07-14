@@ -127,7 +127,7 @@ class RegisterMetabox {
 
                         case 'image':
 
-                            if(!$content['multiple']){
+                            if(empty($content['multiple'])){
 
                                 array_push($box['fields'], array(
                                     'name' => $content['label'],
