@@ -291,4 +291,8 @@ class Model {
         return preg_replace_callback('/([A-Z])/', $func, $str);
     }
 
+    public function getAppModel(){
+    	return $this->appModel;
+    }
+
 } 

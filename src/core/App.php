@@ -58,8 +58,8 @@ class App {
 
 			foreach($this->models as $model){
 
-				if($model->getTaxonomies() && in_array($tax['key'], $model->getTaxonomies())){
-					array_push($post_type, $model->getPostType());
+				if($model->getAppModel()->getTaxonomies() && in_array($tax['key'], $model->getAppModel()->getTaxonomies())){
+					array_push($post_type, $model->getAppModel()->getPostType());
 				}
 
 			}
