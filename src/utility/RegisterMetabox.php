@@ -106,11 +106,21 @@ class RegisterMetabox {
 
                         case 'list':
 
+                            $function = $content['options'];
+
+                            if(strpos($function, '(') > -1){
+
+                                eval('$options = '.$function.';');
+
+                            }else{
+                                $options = $function;
+                            }
+
                             array_push($box['fields'], array(
                                 'name' => $content['label'],
                                 'id'   => $key,
                                 'type' => 'select',
-                                'options' => $content['options']
+                                'options' => $options
                             ));
 
                             break;
