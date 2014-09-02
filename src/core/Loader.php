@@ -31,9 +31,11 @@ class Loader
 		// User Models, Views and Controllers
 
 		foreach ($this->folders as $folder) {
-			foreach (glob(THEME_ABSOLUTE_PATH . '/' . $folder . "/*.php") as $file) {
-                $this->loadFile($file);
-			}
+            foreach (glob(THEME_ABSOLUTE_PATH . '/' . $folder . "/*.php") as $file) {
+                if(!empty($file)):
+                    $this->loadFile($file);
+                endif;
+            }
 		}
 
         if(empty($this->app->post)){
