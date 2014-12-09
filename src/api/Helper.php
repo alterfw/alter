@@ -48,6 +48,10 @@ class Helper {
         return get_bloginfo('name');
     }
 
+    public function description(){
+        return get_bloginfo( 'description' );
+    }
+
     public function domain(){
         return $_SERVER['HTTP_HOST'];
     }
@@ -97,7 +101,7 @@ class Helper {
                 }
 
             }
-                
+
             if (is_single()) {
 
                 echo $el_b;
@@ -118,12 +122,12 @@ class Helper {
 
                 }
 
-                echo $el_b;                
-                echo the_title();                
+                echo $el_b;
+                echo the_title();
                 echo $el_e;
             }
         }
 
     }
 
-} 
+}
