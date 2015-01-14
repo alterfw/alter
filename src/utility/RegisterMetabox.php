@@ -135,6 +135,28 @@ class RegisterMetabox {
 
                             break;
 
+                        case 'date':
+
+                            array_push($box['fields'], array(
+                                'name' => $content['label'],
+                                'id'   => $key,
+                                'type' => 'date',
+                            ));
+
+                            break;
+
+                        case 'map':
+
+                            array_push($box['fields'], array(
+                                'name' => $content['label'],
+                                'id'   => $key,
+                                'type' => 'map',
+                                'style' => 'height: 300px;',
+                                'std' => '-7.1274404, -34.868966'
+                            ));
+
+                            break;
+
                         case 'image':
 
                             if(empty($content['multiple'])){

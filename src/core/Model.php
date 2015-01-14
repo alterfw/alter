@@ -27,7 +27,7 @@ class Model {
 
         $qr = array();
 
-        $non_custom_allowed = array('id', 'status', 'category', 'author', 'date');
+        $non_custom_allowed = array('id', 'status', 'category', 'author', 'date', 'map');
 
         $findvalue = $arguments[0];
 
