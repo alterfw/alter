@@ -16,7 +16,7 @@ class PostObject {
         $taxonomies = $model->getTaxonomies();
 
         $modelDefaultFields = array('title', 'thumbnail', 'editor');
-        $valueTypes = array('text', 'long_text', 'int', 'float', 'boolean', 'list');
+        $valueTypes = array('text', 'long_text', 'int', 'float', 'boolean', 'list', 'date', 'map');
 
         // Post default properties
         foreach($postObject as $key => $value){
