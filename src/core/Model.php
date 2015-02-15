@@ -11,6 +11,11 @@ class Model {
 	private $post_type;
 	private $appModel;
 
+	private $paginate_limit = false;
+	private $paginate_page = false;
+	private $paginated = false;
+	private $last_query = null;
+
 	public function __construct($appModel){
 		$this->post_type = $appModel->getPostType();
 		$this->appModel = $appModel;
@@ -108,17 +113,35 @@ class Model {
 
 		try{
 
+			// Reset the paginated options
+			if($this->paginated){
+				$this->paginate_page = false;
+				$this->paginate_limit = false;
+			}
+
 			$attrs = $this->buildQuery($options);
+
+			if(empty($attrs['paged'])){
+				$attrs['paged'] = 1;
+			}
 
 			if(empty($attrs['limit'])){
 				$attrs['limit'] = -1;
 			}
 
-            if(!empty($attrs['p'])){
-                return new PostObject(get_post($attrs['p']), $this->appModel);
-            }
+			if(!empty($attrs['p'])){
+				return new PostObject(get_post($attrs['p']), $this->appModel);
+			}
 
-			$qr = new WP_Query($attrs);
+			if($this->paginate_limit)
+				$attrs['posts_per_page'] = $this->paginate_limit;
+
+			if($this->paginate_page)
+				$attrs['paged'] = $this->paginate_page;
+
+			$this->last_query = $attrs;
+			$this->paginated = true;
+			$qr = new WP_Query($attrs);			
 
 			if(!$qr->have_posts()){
 				throw new NoPostFoundException();
@@ -214,7 +237,68 @@ class Model {
 			$limit = get_option('posts_per_page');
 		}
 
-		return $this->find(array('limit' => $limit, 'query' => 'paged='.$paged));
+		$this->paginate_limit = $limit;
+		$this->paginate_page = $paged;
+		$this->paginated = false;
+
+		return $this;
+
+	}
+
+	public function pagination($type = 'number_links'){
+
+		$attrs = $this->last_query;
+		$actual_page = $this->paginate_page;
+		$limit = $this->paginate_limit;		
+
+		$attrs['posts_per_page'] = '-1';
+		$attrs['paged'] = '1';
+
+		$qr = new WP_Query($attrs);
+		$total = $qr->post_count;
+
+		$number_of_pages = $total / $limit;
+		if($total % $limit > 0) $number_of_pages++;
+
+		$pages = array();
+
+		$page_previous = array(
+			'page' => 'Previous',
+			'link' => Utils::page_url().'/page/'.($actual_page - 1),
+			'active' => false
+		);
+
+		$page_next = array(
+			'page' => 'Next',
+			'link' => Utils::page_url().'/page/'.($actual_page + 1),
+			'active' => false
+		);
+
+		if($actual_page == 1) $page_previous['link'] = false;
+		if($actual_page == $number_of_pages) $page_next['link'] = false;
+
+		if($type == 'number_links'){			
+
+			array_push($pages, $page_previous);
+			for($i = 1; $i <= $number_of_pages; $i++){
+
+				$active = ($i == $actual_page)? true : false;
+
+				array_push($pages, array(
+					'page' => $i,
+					'link' => Utils::page_url().'/page/'.$i,
+					'active' => $active
+				));
+
+			}
+			array_push($pages, $page_next);			
+
+		}else{
+			array_push($pages, $page_previous);
+			array_push($pages, $page_next);
+		}	
+
+		return $pages;
 
 	}
 

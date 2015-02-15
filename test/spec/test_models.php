@@ -120,19 +120,47 @@ class WP_Test_Alter_Models extends Alter_UnitTestCase {
 		));
 
 		// ---- Act
-		$books_page1 = $this->app->book->paginate(10);
-		$books_page2 = $this->app->book->paginate(10, 2);
+		$books_page1 = $this->app->book->paginate(10)->find();
+		$books_page2 = $this->app->book->paginate(10, 2)->find();
 
 		// ---- Assert
-		$this->assertTrue(is_array($books_page1), 'Assert if book->find(5) returns an array');
+		$this->assertTrue(is_array($books_page1), 'Assert if book->paginate(10) returns an array');
 		$this->assertEquals(count($books_page1), 10, 'Assert if the lenght is correct');
 		$this->assertInstanceOf('PostObject', $books_page1[0], 'Asserts if is an array of PostObject');
 
-		$this->assertTrue(is_array($books_page2), 'Assert if book->find(5) returns an array');
+		$this->assertTrue(is_array($books_page2), 'Assert if book->paginate(10, 2) returns an array');
 		$this->assertEquals(count($books_page2), 10, 'Assert if the lenght is correct');
 		$this->assertInstanceOf('PostObject', $books_page2[0], 'Asserts if is an array of PostObject');
 
 		$this->assertNotEquals($books_page1[0]->ID, $books_page2[0]->ID, 'Asserts if the two arrays are not equals');
+
+	}
+
+	function test_models_pagination(){
+
+		// ---- Arrange
+		$this->factory->post->create_many(155, array(
+			'post_type' => 'book'
+		));
+
+		// ---- Act
+		$books = $this->app->book->paginate(10, 2)->find();
+		$pagination_number = $this->app->book->pagination('number_links');
+		$pagination_pages = $this->app->book->pagination('page_links');
+
+		// ---- Assert
+		
+		// Number links		
+		$total_pages = count($pagination_number);
+		$this->assertEquals($total_pages, 18, 'Assert if the number of pages are correct'); // (155/10) 16 pages + next + previous
+		$this->assertEquals($pagination_number[0]['page'], 'Previous', 'Assert the position of the previous link');
+		$this->assertEquals($pagination_number[($total_pages - 1)]['page'], 'Next',  'Assert the position of the next link');
+		$this->assertTrue($pagination_number[2]['active'], 'Assert if the right page is active');
+
+		// Page links
+		$this->assertEquals(count($pagination_pages), 2, 'Assert if the number of pages for a page link');
+		$this->assertEquals($pagination_pages[0]['page'], 'Previous', 'Assert the position of the previous link');
+		$this->assertEquals($pagination_pages[1]['page'], 'Next',  'Assert the position of the next link');
 
 	}
 
