@@ -17,7 +17,7 @@ if(file_exists("/vagrant/wordpress/wp-tests-config.php")){
 
 }
 
-define('THEME_ABSOLUTE_PATH',  ABSPATH . '/wp-content/themes/example-theme-master/');
+define('APPLICATION_PATH',  ABSPATH . '/wp-content/themes/example-theme-master/');
 
 $config_file_path = $argv[1];
 

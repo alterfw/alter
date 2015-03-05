@@ -31,7 +31,7 @@ class Loader
 		// User Models, Views and Controllers
 
 		foreach ($this->folders as $folder) {
-            foreach (glob(THEME_ABSOLUTE_PATH . '/' . $folder . "/*.php") as $file) {
+            foreach (glob(APPLICATION_PATH . '/' . $folder . "/*.php") as $file) {
                 if(!empty($file)):
                     $this->loadFile($file);
                 endif;
@@ -39,11 +39,11 @@ class Loader
 		}
 
         if(empty($this->app->post)){
-            $this->loadFile(ALTER . 'src/core/default/PostModel.php');
+            $this->loadFile(ALTER . '/src/core/default/PostModel.php');
         }
 
         if(empty($this->app->page)){
-            $this->loadFile(ALTER . 'src/core/default/PageModel.php');
+            $this->loadFile(ALTER . '/src/core/default/PageModel.php');
         }
 
 	}
@@ -54,7 +54,7 @@ class Loader
 
             $name = str_replace('.php', '', $file);
             $name_arr = explode('/', $name);
-            $name = $name_arr[count($name_arr) - 1];;
+            $name = $name_arr[count($name_arr) - 1];
 
             require $file;
 

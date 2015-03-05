@@ -17,7 +17,7 @@ if(file_exists("/vagrant/wordpress/wp-config.php")){
 
 }
 
-define('THEME_ABSOLUTE_PATH',  ABSPATH . '/wp-content/themes/example-theme-master/');
+define('APPLICATION_PATH',  ABSPATH . '/wp-content/themes/example-theme-master/');
 
 /*
  * Globalize some WordPress variables, because PHPUnit loads this file inside a function
@@ -50,4 +50,4 @@ require dirname( __FILE__ ) . '/lib/factory.php';
 require dirname( __FILE__ ) . '/lib/exceptions.php';
 require dirname( __FILE__ ) . '/lib/Alter_UnitTestCase.php';
 
-require_once THEME_ABSOLUTE_PATH . '/functions.php';
+require_once APPLICATION_PATH . '/functions.php';
