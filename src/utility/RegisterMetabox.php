@@ -179,6 +179,14 @@ class RegisterMetabox {
 
                             break;
 
+                        default:
+                            array_push($box['fields'], array(
+                                'name' => $content['label'],
+                                'id'   => $key,
+                                'type' => $content['type'],
+                            ));
+                            break;
+
                     }
 
                 }
