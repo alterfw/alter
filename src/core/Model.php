@@ -163,7 +163,7 @@ class Model {
 			}
 
 		}catch(NoPostFoundException $e){
-			return false;
+			return [];
 		}
 
 	}
