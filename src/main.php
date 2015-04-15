@@ -17,7 +17,8 @@ define('ALTER_VENDOR', ALTER . "/..");
 if(!defined('ASSETS_PATH')) define('ASSETS_PATH', get_bloginfo('template_url'));
 if(!defined('APPLICATION_PATH')) define('APPLICATION_PATH', get_template_directory());
 
-define('RWMB_URL', ALTER_VENDOR . "/meta-box/" );
+$path = explode('wp-content', realpath(ALTER_VENDOR . "/meta-box/"));
+define('RWMB_URL', get_site_url().'/wp-content'.$path[1].'/');
 define('RWMB_DIR', ALTER_VENDOR . "/meta-box/" );
 
 // Assets constants
