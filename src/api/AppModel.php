@@ -91,12 +91,22 @@ abstract class AppModel {
             $tax = $this->taxonomies;
 
         $supports = array();
+        $wp_fields = array(
+        	'title', 
+        	'editor', 
+        	'thumbnail', 
+        	'excerpt', 
+        	'comments', 
+        	'revisions', 
+        	'trackbacks', 
+        	'page-attributes'
+        );
 
         if(!empty($this->fields))
 
             foreach($this->fields as $key => $value){
 
-                if(($key =='title' || $key == 'editor' || $key == 'thumbnail' || $key == 'comments') && $value){
+                if(in_array($key, $wp_fields) && $value){
                     array_push($supports, $key);
                 }
 

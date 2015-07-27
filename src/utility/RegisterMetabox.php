@@ -33,6 +33,16 @@ class RegisterMetabox {
     public function doRegister(){
 
         $meta_boxes = array();
+        $wp_fields = array(
+        	'title', 
+        	'editor', 
+        	'thumbnail', 
+        	'excerpt', 
+        	'comments', 
+        	'revisions', 
+        	'trackbacks', 
+        	'page-attributes'
+        );
 
         foreach($this->boxes as $post_type => $fields){
 
@@ -50,7 +60,7 @@ class RegisterMetabox {
 
             foreach($fields as $key => $content){
 
-                if($key != 'title' && $key != 'editor' && $key != 'thumbnail'){
+                if(!in_array($key, $wp_fields)){
 
                     switch($content['type']){
 
