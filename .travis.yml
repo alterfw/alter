@@ -26,8 +26,6 @@ env:
 
 matrix:
   include:
-    - php: "5.3"
-      env: WP_VERSION=master
     - php: "5.4"
       env: WP_VERSION=3.8.1
 
