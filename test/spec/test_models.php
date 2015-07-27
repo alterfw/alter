@@ -33,8 +33,8 @@ class WP_Test_Alter_Models extends Alter_UnitTestCase {
      * This method tests if in a empty database, the return of find() will be false
      */
     function test_models_empty_return(){
-
-        $this->assertFalse(is_array($this->app->book->find()), 'Check if the model->find() method returns false (empty)');
+        $this->assertTrue(is_array($this->app->book->find()), 'Check if the model->find() method returns an array');
+        $this->assertTrue((count($this->app->book->find()) == 0), 'Check if the model->find() method returns 0 items');
 
     }
 
@@ -149,8 +149,8 @@ class WP_Test_Alter_Models extends Alter_UnitTestCase {
 		$pagination_pages = $this->app->book->pagination('page_links');
 
 		// ---- Assert
-		
-		// Number links		
+
+		// Number links
 		$total_pages = count($pagination_number);
 		$this->assertEquals($total_pages, 18, 'Assert if the number of pages are correct'); // (155/10) 16 pages + next + previous
 		$this->assertEquals($pagination_number[0]['page'], 'Previous', 'Assert the position of the previous link');
