@@ -1,10 +1,10 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Desenvolvimento
- * Date: 07/07/14
- * Time: 18:04
- */
+* Created by PhpStorm.
+* User: Desenvolvimento
+* Date: 07/07/14
+* Time: 18:04
+*/
 
 class Model {
 
@@ -21,94 +21,94 @@ class Model {
 		$this->appModel = $appModel;
 	}
 
-    /**
-     * Automagic Methods
-     * @param $method
-     * @param $arguments array, first value is the value to find, the second is a query
-     * @return bool|WP_Query
-     * @throws Exception
-     */
-    function __call($method, $arguments){
+	/**
+	* Automagic Methods
+	* @param $method
+	* @param $arguments array, first value is the value to find, the second is a query
+	* @return bool|WP_Query
+	* @throws Exception
+	*/
+	function __call($method, $arguments){
 
-        $qr = array();
+		$qr = array();
 
-        $non_custom_allowed = array('id', 'status', 'category', 'author', 'date');
+		$non_custom_allowed = array('id', 'status', 'category', 'author', 'date');
 
-        $findvalue = $arguments[0];
+		$findvalue = $arguments[0];
 
-        if(!empty($arguments[1]) && count($arguments[1]) > 0){
+		if(!empty($arguments[1]) && count($arguments[1]) > 0){
 
-            foreach($arguments[1] as $f => $v){
-                $qr[$f] = $v;
-            }
+			foreach($arguments[1] as $f => $v){
+				$qr[$f] = $v;
+			}
 
-        }
+		}
 
 
-        $custom_fields = array();
-        foreach($this->appModel->getFields() as $field => $value){
-            if(is_array($value)) $custom_fields[$field] = $value;
-        }
+		$custom_fields = array();
+		foreach($this->appModel->getFields() as $field => $value){
+			if(is_array($value)) $custom_fields[$field] = $value;
+		}
 
-        $attribute = str_replace("find_by_", "", $this->from_camel_case($method));
+		$attribute = str_replace("find_by_", "", $this->from_camel_case($method));
 
-        if(in_array($attribute, $non_custom_allowed)){
+		if(in_array($attribute, $non_custom_allowed)){
 
-            $key = null;
+			$key = null;
 
-            switch($attribute){
+			switch($attribute){
 
-                case 'id':
-                    $key = 'p';
-                    break;
+				case 'id':
+				$key = 'p';
+				break;
 
-                case 'status':
-                    $key = 'post_status';
-                    break;
+				case 'status':
+				$key = 'post_status';
+				break;
 
-                case 'category':
-                    $key = 'cat';
-                    break;
+				case 'category':
+				$key = 'cat';
+				break;
 
-                case 'author':
-                    $key = 'author';
-                    break;
+				case 'author':
+				$key = 'author';
+				break;
 
-                case 'date':
-                    $key = 'date_query';
-                    break;
+				case 'date':
+				$key = 'date_query';
+				break;
 
-            }
+			}
 
-            $qr[$key] = $findvalue;
+			$qr[$key] = $findvalue;
 
-            return $this->find($qr);
+			return $this->find($qr);
 
-        }else{
+		}else{
 
-            if(!empty($custom_fields[$attribute])){
+			if(!empty($custom_fields[$attribute])){
 
-                $qr['meta_key'] = $attribute;
-                $qr['meta_value'] = $findvalue;
+				$qr['meta_key'] = $attribute;
+				$qr['meta_value'] = $findvalue;
 
-                return $this->find($qr);
+				return $this->find($qr);
 
-            }else{
+			}else{
 
-                throw new Exception("Trying to access a method that doesn't exists");
+				throw new Exception("Trying to access a method that doesn't exists");
 
-            }
+			}
 
-        }
+		}
 
-    }
+	}
 
-    /**
-	 * Find posts in the Wordpress database using WP_Query
-	 *
-	 * @param $options
-	 * @return bool|WP_Query
-	 */
+	/**
+	* Find posts in the Wordpress database using WP_Query
+	*
+	* @param $options
+	* @return bool|WP_Query
+	*/
 	public function find($options = null){
 
 		try{
@@ -134,14 +134,14 @@ class Model {
 			}
 
 			if($this->paginate_limit)
-				$attrs['posts_per_page'] = $this->paginate_limit;
+			$attrs['posts_per_page'] = $this->paginate_limit;
 
 			if($this->paginate_page)
-				$attrs['paged'] = $this->paginate_page;
+			$attrs['paged'] = $this->paginate_page;
 
 			$this->last_query = $attrs;
 			$this->paginated = true;
-			$qr = new WP_Query($attrs);			
+			$qr = new WP_Query($attrs);
 
 			if(!$qr->have_posts()){
 				throw new NoPostFoundException();
@@ -169,10 +169,10 @@ class Model {
 	}
 
 	/**
-	 * Find a post by the slug
-	 * @param $slug
-	 * @return bool|PostObject
-	 */
+	* Find a post by the slug
+	* @param $slug
+	* @return bool|PostObject
+	*/
 	public function findBySlug($slug){
 
 		$args = array(
@@ -193,12 +193,12 @@ class Model {
 	}
 
 	/**
-	 * Find posts by a taxonomy
-	 * @param $taxonomy
-	 * @param $value
-	 * @param $limit
-	 * @return bool|WP_Query
-	 */
+	* Find posts by a taxonomy
+	* @param $taxonomy
+	* @param $value
+	* @param $limit
+	* @return bool|WP_Query
+	*/
 	public function findByTaxonomy($taxonomy, $value, $limit){
 
 		$options = array();
@@ -222,11 +222,11 @@ class Model {
 	}
 
 	/**
-	 * Paginate a list of posts
-	 * @param null $limit
-	 * @param null $paged
-	 * @return bool|WP_Query
-	 */
+	* Paginate a list of posts
+	* @param null $limit
+	* @param null $paged
+	* @return bool|WP_Query
+	*/
 	public function paginate($limit = null, $paged = null){
 
 		if($paged == null){
@@ -249,7 +249,7 @@ class Model {
 
 		$attrs = $this->last_query;
 		$actual_page = $this->paginate_page;
-		$limit = $this->paginate_limit;		
+		$limit = $this->paginate_limit;
 
 		$attrs['posts_per_page'] = '-1';
 		$attrs['paged'] = '1';
@@ -262,22 +262,24 @@ class Model {
 
 		$pages = array();
 
+		$page_url = explode('/page', Utils::page_url())[0];
+
 		$page_previous = array(
 			'page' => 'Previous',
-			'link' => Utils::page_url().'/page/'.($actual_page - 1),
+			'link' => $page_url.'/page/'.($actual_page - 1),
 			'active' => false
 		);
 
 		$page_next = array(
 			'page' => 'Next',
-			'link' => Utils::page_url().'/page/'.($actual_page + 1),
+			'link' => $page_url.'/page/'.($actual_page + 1),
 			'active' => false
 		);
 
 		if($actual_page == 1) $page_previous['link'] = false;
 		if($actual_page == $number_of_pages) $page_next['link'] = false;
 
-		if($type == 'number_links'){			
+		if($type == 'number_links'){
 
 			array_push($pages, $page_previous);
 			for($i = 1; $i <= $number_of_pages; $i++){
@@ -286,27 +288,26 @@ class Model {
 
 				array_push($pages, array(
 					'page' => $i,
-					'link' => Utils::page_url().'/page/'.$i,
+					'link' => $page_url.'/page/'.$i,
 					'active' => $active
 				));
 
 			}
-			array_push($pages, $page_next);			
+			array_push($pages, $page_next);
 
 		}else{
 			array_push($pages, $page_previous);
 			array_push($pages, $page_next);
-		}	
+		}
 
 		return $pages;
-
 	}
 
 	/**
-	 * Creates a quer for WP_Query
-	 * @param null $options
-	 * @return array
-	 */
+	* Creates a quer for WP_Query
+	* @param null $options
+	* @return array
+	*/
 	private function buildQuery($options = null){
 
 		$attrs = $this->getDefaultQuery();
@@ -351,10 +352,10 @@ class Model {
 	}
 
 	/**
-	 * Create a default query
-	 *
-	 * @return array
-	 */
+	* Create a default query
+	*
+	* @return array
+	*/
 	private function getDefaultQuery(){
 
 		return array(
@@ -364,19 +365,19 @@ class Model {
 
 	}
 
-    /**
-     * Extracts method name
-     * @param $str
-     * @return mixed
-     */
-    private function from_camel_case($str) {
-        $str[0] = strtolower($str[0]);
-        $func = create_function('$c', 'return "_" . strtolower($c[1]);');
-        return preg_replace_callback('/([A-Z])/', $func, $str);
-    }
+	/**
+	* Extracts method name
+	* @param $str
+	* @return mixed
+	*/
+	private function from_camel_case($str) {
+		$str[0] = strtolower($str[0]);
+		$func = create_function('$c', 'return "_" . strtolower($c[1]);');
+		return preg_replace_callback('/([A-Z])/', $func, $str);
+	}
 
-    public function getAppModel(){
-    	return $this->appModel;
-    }
+	public function getAppModel(){
+		return $this->appModel;
+	}
 
-} 
+}
