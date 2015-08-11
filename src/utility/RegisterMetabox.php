@@ -34,13 +34,13 @@ class RegisterMetabox {
 
         $meta_boxes = array();
         $wp_fields = array(
-        	'title', 
-        	'editor', 
-        	'thumbnail', 
-        	'excerpt', 
-        	'comments', 
-        	'revisions', 
-        	'trackbacks', 
+        	'title',
+        	'editor',
+        	'thumbnail',
+        	'excerpt',
+        	'comments',
+        	'revisions',
+        	'trackbacks',
         	'page-attributes'
         );
 
@@ -118,10 +118,8 @@ class RegisterMetabox {
 
                             $function = $content['options'];
 
-                            if(strpos($function, '(') > -1){
-
-                                eval('$options = '.$function.';');
-
+                            if(is_string($function)){
+                                $options = call_user_func($function);
                             }else{
                                 $options = $function;
                             }
@@ -217,4 +215,4 @@ class RegisterMetabox {
 
     }
 
-} 
+}
