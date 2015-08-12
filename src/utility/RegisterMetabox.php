@@ -1,218 +1,229 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: sergiovilar
- * Date: 03/05/14
- * Time: 10:55 AM
- */
+* Created by PhpStorm.
+* User: sergiovilar
+* Date: 03/05/14
+* Time: 10:55 AM
+*/
 
 class RegisterMetabox {
 
-    private $boxes = array();
+  private $boxes = array();
 
-    /**
-     * Add a post type and his fields
-     *
-     * @param $post_type
-     * @param $fields
-     */
-    public function add($post_type, $fields){
+  /**
+  * Add a post type and his fields
+  *
+  * @param $post_type
+  * @param $fields
+  */
+  public function add($post_type, $fields){
 
-        if($fields){
-            $this->boxes[$post_type] = $fields;
+    if($fields){
+      $this->boxes[$post_type] = $fields;
+    }
+
+  }
+
+  public function register(){
+
+    add_filter( 'rwmb_meta_boxes', array($this, 'doRegister') );
+
+  }
+
+  public function doRegister(){
+
+    $post = false;
+    if(!empty($_GET['post'])){
+      $post = get_post($_GET['post']);
+    }
+
+    $meta_boxes = array();
+    $wp_fields = array(
+      'title',
+      'editor',
+      'thumbnail',
+      'excerpt',
+      'comments',
+      'revisions',
+      'trackbacks',
+      'page-attributes'
+    );
+
+    foreach($this->boxes as $post_type => $fields){
+
+      $box = array(
+        'id' => $post_type . '_metabox',
+        'title' => __('More') .' '. __('About'),
+        'pages' => array($post_type),
+        'context' => 'normal',
+        'priority' => 'high',
+        'autosave' => true,
+
+        // List of meta fields
+        'fields' => array()
+      );
+
+      foreach($fields as $key => $content){
+
+        if(!empty($content['if']) && $post){
+          $condition = $content['if'];
+          eval('$valid = $post->post_'.$condition[0].' '.$condition[1].' "'.$condition[2].'";');
+          if(!$valid) continue;
         }
 
-    }
+        if(!in_array($key, $wp_fields)){
 
-    public function register(){
+          switch($content['type']){
 
-        add_filter( 'rwmb_meta_boxes', array($this, 'doRegister') );
+            case 'int':
 
-    }
+            array_push($box['fields'], array(
+              'name' => $content['label'],
+              'id'   => $key,
+              'type' => 'number',
+            ));
 
-    public function doRegister(){
+            break;
 
-        $meta_boxes = array();
-        $wp_fields = array(
-        	'title',
-        	'editor',
-        	'thumbnail',
-        	'excerpt',
-        	'comments',
-        	'revisions',
-        	'trackbacks',
-        	'page-attributes'
-        );
+            case 'text':
 
-        foreach($this->boxes as $post_type => $fields){
+            array_push($box['fields'], array(
+              'name' => $content['label'],
+              'id'   => $key,
+              'type' => 'text',
+            ));
 
-            $box = array(
-                'id' => $post_type . '_metabox',
-                'title' => __('More') .' '. __('About'),
-                'pages' => array($post_type),
-                'context' => 'normal',
-                'priority' => 'high',
-                'autosave' => true,
+            break;
 
-                // List of meta fields
-                'fields' => array()
-            );
+            case 'long_text':
 
-            foreach($fields as $key => $content){
+            array_push($box['fields'], array(
+              'name' => $content['label'],
+              'id'   => $key,
+              'type' => 'textarea',
+            ));
 
-                if(!in_array($key, $wp_fields)){
+            break;
 
-                    switch($content['type']){
+            case 'float':
 
-                        case 'int':
+            array_push($box['fields'], array(
+              'name' => $content['label'],
+              'id'   => $key,
+              'type' => 'text',
+            ));
 
-                            array_push($box['fields'], array(
-                                'name' => $content['label'],
-                                'id'   => $key,
-                                'type' => 'number',
-                            ));
+            break;
 
-                            break;
+            case 'boolean':
 
-                        case 'text':
+            array_push($box['fields'], array(
+              'name' => $content['label'],
+              'id'   => $key,
+              'type' => 'checkbox',
+            ));
 
-                            array_push($box['fields'], array(
-                                'name' => $content['label'],
-                                'id'   => $key,
-                                'type' => 'text',
-                            ));
+            break;
 
-                            break;
+            case 'list':
 
-                        case 'long_text':
+            $function = $content['options'];
 
-                            array_push($box['fields'], array(
-                                'name' => $content['label'],
-                                'id'   => $key,
-                                'type' => 'textarea',
-                            ));
+            if(is_string($function)){
+              $options = call_user_func($function);
+            }else{
+              $options = $function;
+            }
 
-                            break;
+            array_push($box['fields'], array(
+              'name' => $content['label'],
+              'id'   => $key,
+              'type' => 'select',
+              'options' => $options
+            ));
 
-                        case 'float':
+            break;
 
-                            array_push($box['fields'], array(
-                                'name' => $content['label'],
-                                'id'   => $key,
-                                'type' => 'text',
-                            ));
+            case 'file':
 
-                            break;
+            array_push($box['fields'], array(
+              'name' => $content['label'],
+              'id'   => $key,
+              'type' => 'file',
+            ));
 
-                        case 'boolean':
+            break;
 
-                            array_push($box['fields'], array(
-                                'name' => $content['label'],
-                                'id'   => $key,
-                                'type' => 'checkbox',
-                            ));
+            case 'date':
 
-                            break;
+            array_push($box['fields'], array(
+              'name' => $content['label'],
+              'id'   => $key,
+              'type' => 'date',
+            ));
 
-                        case 'list':
+            break;
 
-                            $function = $content['options'];
+            case 'map':
 
-                            if(is_string($function)){
-                                $options = call_user_func($function);
-                            }else{
-                                $options = $function;
-                            }
+            array_push($box['fields'], array(
+              'name' => $content['label'],
+              'id'   => $key,
+              'type' => 'map',
+              'style' => 'height: 300px;',
+              'std' => '-7.1274404, -34.868966'
+            ));
 
-                            array_push($box['fields'], array(
-                                'name' => $content['label'],
-                                'id'   => $key,
-                                'type' => 'select',
-                                'options' => $options
-                            ));
+            break;
 
-                            break;
+            case 'image':
 
-                        case 'file':
+            if(empty($content['multiple'])){
 
-                            array_push($box['fields'], array(
-                                'name' => $content['label'],
-                                'id'   => $key,
-                                'type' => 'file',
-                            ));
+              array_push($box['fields'], array(
+                'name' => $content['label'],
+                'id'   => $key,
+                'type' => 'image',
+              ));
 
-                            break;
+            }else{
 
-                        case 'date':
-
-                            array_push($box['fields'], array(
-                                'name' => $content['label'],
-                                'id'   => $key,
-                                'type' => 'date',
-                            ));
-
-                            break;
-
-                        case 'map':
-
-                            array_push($box['fields'], array(
-                                'name' => $content['label'],
-                                'id'   => $key,
-                                'type' => 'map',
-                                'style' => 'height: 300px;',
-                                'std' => '-7.1274404, -34.868966'
-                            ));
-
-                            break;
-
-                        case 'image':
-
-                            if(empty($content['multiple'])){
-
-                                array_push($box['fields'], array(
-                                    'name' => $content['label'],
-                                    'id'   => $key,
-                                    'type' => 'image',
-                                ));
-
-                            }else{
-
-                                array_push($box['fields'], array(
-                                    'name' => $content['label'],
-                                    'id'   => $key,
-                                    'type' => 'plupload_image',
-                                ));
-
-                            }
-
-                            break;
-
-                        default:
-                            array_push($box['fields'], array(
-                                'name' => $content['label'],
-                                'id'   => $key,
-                                'type' => $content['type'],
-                            ));
-                            break;
-
-                    }
-
-                }
+              array_push($box['fields'], array(
+                'name' => $content['label'],
+                'id'   => $key,
+                'type' => 'plupload_image',
+              ));
 
             }
 
-            if(count($box['fields']) > 0){
-                array_push($meta_boxes, $box);
-            }
+            break;
+
+            default:
+            array_push($box['fields'], array(
+              'name' => $content['label'],
+              'id'   => $key,
+              'type' => $content['type'],
+            ));
+            break;
+
+          }
 
         }
 
-        if(count($meta_boxes) > 0){
-            return $meta_boxes;
-        }else{
-            return array();
-        }
+      }
+
+      if(count($box['fields']) > 0){
+        array_push($meta_boxes, $box);
+      }
 
     }
+
+    if(count($meta_boxes) > 0){
+      return $meta_boxes;
+    }else{
+      return array();
+    }
+
+  }
 
 }
