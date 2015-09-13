@@ -1,0 +1,14 @@
+alter_wp:
+  image: wordpress
+  links:
+    - alter_db:mysql
+  ports:
+    - 8080:80
+  working_dir: /var/www/html
+  volumes:
+   - .:/var/www/html/wp-content/themes/development/
+
+alter_db:
+  image: mariadb
+  environment:
+    MYSQL_ROOT_PASSWORD: example

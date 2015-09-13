@@ -1,22 +1,25 @@
 {
-    "name": "alterfw/alter",
-    "description": "A small framework that provides the way to develop model-based Wordpress themes",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Sergio Vilar",
-            "email": "vilar@me.com"
-        }
-    ],    
-    "require": {
-        "alterfw/hero": "^0.2.0",
-        "alterfw/options-page": "dev-master"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "3.7.*"
-    },
-    "minimum-stability": "dev",
-    "autoload": {
-        "files": ["src/main.php"]
+  "name": "alterfw/alter",
+  "description": "A small framework that provides the way to develop model-based Wordpress themes",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Sergio Vilar",
+      "email": "vilar@me.com"
     }
+  ],
+  "require": {
+    "alterfw/hero": "^0.2.0",
+    "alterfw/ampersand": "^0.2.0",
+    "alterfw/options-page": "dev-master"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "3.7.*"
+  },
+  "minimum-stability": "dev",
+  "autoload": {
+  },
+  "scripts": {
+    "open": "DIP='http://'$(docker-machine ip default); DIP+=':8080'; open $DIP"
+  }
 }
