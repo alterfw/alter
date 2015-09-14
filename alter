@@ -12,10 +12,12 @@ require "vendor/autoload.php";
 use Hero\Console\SeedRunner;
 use Hero\Console\SeedCreator;
 use Hero\Console\ModelCreator;
+use Alter\Option\Console\OptionCreator;
 use Symfony\Component\Console\Application;
 
 $application = new Application();
 $application->add(new SeedRunner());
 $application->add(new SeedCreator());
 $application->add(new ModelCreator());
+$application->add(new OptionCreator());
 $application->run();
