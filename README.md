@@ -7,7 +7,7 @@ A small framework that provides features to develop a real WordPress Application
 
 ## Installation
 
-Alter uses [Composer](http://getcomposer.org/) to manage dependencies, so you need to install Composer use Alter.
+Alter uses [Composer](http://getcomposer.org/) to manage dependencies, so you need to install Composer to use Alter.
 
 Enter in the WordPress *themes* directory and run:
 
