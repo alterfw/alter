@@ -15,7 +15,7 @@ Enter in the WordPress *themes* directory and run:
 
 ## Documentation
 
-You can read more about how Ampersand works in the [documentation page](http://alterfw.github.io/docs/).
+You can read more about how Alter works in the [documentation page](http://alterfw.github.io/docs/).
 
 ## Contributing
 
