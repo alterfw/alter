@@ -9,15 +9,13 @@
     }
   ],
   "require": {
-    "alterfw/hero": "^0.2.0",
-    "alterfw/ampersand": "^0.2.0",
-    "alterfw/options-page": "dev-master"
+    "alterfw/hero": "^0.2.11",
+    "alterfw/ampersand": "^0.2.11",
+    "alterfw/options-page": "^0.1.1"
   },
-  "require-dev": {
-    "phpunit/phpunit": "3.7.*"
-  },
-  "minimum-stability": "dev",
+  "minimum-stability": "stable",
   "autoload": {
+    "files": ["main.php"]
   },
   "scripts": {
     "open": "DIP='http://'$(docker-machine ip default); DIP+=':8080'; open $DIP"
