@@ -1,0 +1,23 @@
+#!/usr/bin/env php
+<?php
+
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+
+define('HERO_ENV', 'CLI');
+define('APPLICATION_PATH', __DIR__);
+
+require "vendor/autoload.php";
+
+use Hero\Console\SeedRunner;
+use Hero\Console\SeedCreator;
+use Hero\Console\ModelCreator;
+use Alter\Option\Console\OptionCreator;
+use Symfony\Component\Console\Application;
+
+$application = new Application();
+$application->add(new SeedRunner());
+$application->add(new SeedCreator());
+$application->add(new ModelCreator());
+$application->add(new OptionCreator());
+$application->run();
