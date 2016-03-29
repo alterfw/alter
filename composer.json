@@ -1,6 +1,6 @@
 {
   "name": "alterfw/alter",
-  "description": "A small framework that provides the way to develop model-based Wordpress themes",
+  "description": "A microframework for WordPress applications",
   "license": "MIT",
   "authors": [
     {
@@ -9,8 +9,8 @@
     }
   ],
   "require": {
-    "alterfw/hero": "^0.2.11",
-    "alterfw/ampersand": "^0.2.11",
+    "alterfw/hero": "^0.2.18",
+    "alterfw/ampersand": "^0.2.13",
     "alterfw/options-page": "^0.1.1"
   },
   "minimum-stability": "stable",
